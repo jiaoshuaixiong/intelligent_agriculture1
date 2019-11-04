@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../../js/city-picker/city-picker.css">
+    <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+    <script src="../../js/city-picker/city-picker.data.js"></script>
+    <script src="../../js/city-picker/city-picker.js"></script>
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <form class="form-horizontal" onsubmit="return false" id="form">
+        <fieldset>
+            <input type="hidden" id="id" name="id">
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地位置</label>
+                <div style="position: relative;" class='col-md-10'><!-- container -->
+                    <input id="city-picker2" size="40" name="position" readonly type="text">
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地类型</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='基地类型' type='text' name='type' id='type'
+                           data-bv-notempty='true' data-bv-notempty-message='type 不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地名称</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='基地名称' type='text' name='name' id='name'
+                           data-bv-notempty='true' data-bv-notempty-message='name 不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地负责人</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='基地负责人' type='text' name='linkman' id='linkman'
+                           data-bv-notempty='true' data-bv-notempty-message='linkman 不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>手机号</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='手机号' type='text' name='telephone' id='telephone'
+                           data-bv-notempty='true' data-bv-notempty-message='telephone 不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>主要农作物</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='填入主要农作物' type='text' name='mainCrop' id='mainCrop'
+                           data-bv-notempty='true' data-bv-notempty-message='主要农作物不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>面积</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='填入面积' type='number' name='area' id='area'
+                           data-bv-notempty='true' data-bv-notempty-message='面积不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地介绍</label>
+                <div class='col-md-10'>
+                    <textarea class='form-control' rows="10" placeholder='填入基地信息' type='text' name='remark'
+                              id='remark'></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <div class="row" align="center">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" onclick="javascript:history.back(-1)">返回</button>
+                        <button class="btn btn-primary" type="submit" onclick="update()">
+                            <i class="fa fa-save"></i> 保存
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+<!--<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>-->
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript">
+    //初始化city-picker省市区三级联动
+    $("#city-picker2").citypicker();
+    var createTime;
+    layui.use(['layer', 'laydate'], function () {
+        var layer = layui.layer;
+    });
+
+    initData();
+
+    function initData() {
+        var id = getUrlParam("id");
+        $("#city-picker2").citypicker("reset");
+        $("#city-picker2").citypicker("destroy");
+        if (id != "") {
+            $.ajax({
+                type: 'get',
+                url: '/farms/' + id,
+                async: false,
+                success: function (data) {
+                    //  console.log(data)
+                    //let hh = `<span class="placeholder">${data.province}/${data.city}/${data.district}</span>`;
+                    //获得指定值
+                    // $('.city-picker-span').children().eq(0).html(hh);
+
+
+                    $("#city-picker2").citypicker({
+                        province: data.province,
+                        city: data.city,
+                        district: data.district
+                    });
+
+                    $('#id').val(data.id);
+                    $('#type').val(data.type);
+                    $('#name').val(data.name);
+                    $('#linkman').val(data.linkman);
+                    $('#telephone').val(data.telephone);
+                    $('#mainCrop').val(data.mainCrop);
+                    $('#area').val(data.area);
+                    $('#remark').val(data.remark);
+                    createTime = data.createTime;
+                    /*  $('#createTime').val(data.createTime);
+                      $('#updateTime').val(data.updateTime);*/
+
+
+                }
+            });
+        }
+    }
+
+    function update() {
+        // var area1=$('#city-picker2').text();
+        // console.log($('#city-picker2').next().children().eq(0).children().eq(0).text());
+        //获得默认的值
+        // var area1=$('#city-picker2').next().children().eq(0).children().eq(0).text();
+        //  console.log(area1);
+        //获得修改的值
+        //var area2=$('#city-picker2').next().children().eq(1).children();
+
+        //遍历拼接 北京市/北京市/朝阳区
+        // var str=area2.eq(0).text()+"/"+area2.eq(1).text()+"/"+area2.eq(2).text();
+        //  console.log(str);
+        $('#form').bootstrapValidator();
+        var bootstrapValidator = $("#form").data('bootstrapValidator');
+        bootstrapValidator.validate();
+        if (!bootstrapValidator.isValid()) {
+            return;
+        }
+
+        var formdata = $("#form").serializeObject();
+        var area1 = formdata.position;
+        console.log(formdata.area);
+        //得到citypicker格式的省市区信息  安徽省/芜湖市/鸠江区
+        //去判断拿修改的还是默认的值
+        // if (str=='//'||str.length==2){
+        var area = area1.split("/");
+        formdata.province = area[0];
+        formdata.city = area[1];
+        if (area.length > 2) {
+            formdata.district = area[2];
+        }
+
+        formdata.createTime = createTime;
+        $.ajax({
+            type: 'put',
+            url: '/farms',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(formdata),
+            success: function (data) {
+                layer.msg("修改成功", {shift: -1, time: 1000}, function () {
+                    location.href = "myFarm.html";
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

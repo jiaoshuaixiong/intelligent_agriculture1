@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>设备管理-阈值设置</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+</head>
+<body ng-app="ia" ng-controller="deviceThresholdController" ng-init="devices()">
+    <div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div>
+                <header style="height: 100%">
+                    <div align="left">
+	                    <table style="width: 100%">
+	                   		<tr>
+
+	                   		</tr> 
+	                    </table>
+					</div>
+                </header>
+                
+                <div>
+                    <div class="widget-body no-padding">
+                        <table id="dt-table" class="table table-striped table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+									<th>设备ID</th>
+									<th>设备序列号</th>
+									<th>设备名称</th>
+                                    <th>最小阈值</th>
+                                    <th>最大阈值</th>
+                                    <th>更改</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="device in deviceList">
+                                    <th>{{device.id}}</th>
+                                    <th>{{device.sn}}</th>
+                                    <th>{{device.name}}</th>
+                                    <th><input type="text" ng-model="device.thresholdMin"></th>
+                                    <th><input type="text" ng-model="device.thresholdMax"></th>
+                                    <th>
+                                        <button class="btn btn-primary" type="submit" ng-click="updateDeviceThreshold(device)">
+                                            <i class="fa fa-save"></i> 阈值修改
+                                        </button>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="../../js/angularjs/angular.min.js"></script>
+<script type="text/javascript">
+    var app=angular.module('ia',[]);
+    app.controller('deviceThresholdController',function ($scope,$http) {
+        $scope.devices=function () {
+            $http.get('../../devices').then(function (response) {
+                $scope.deviceList=response.data.data;
+            })
+        }
+
+        $scope.updateDeviceThreshold=function (device) {
+            $http.put('../../devices',device).then(function (response) {
+                document.location.reload();
+            })
+        }
+    })
+</script>

@@ -1,0 +1,594 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>智能环境监测-首页</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/layui/font/font_2wmcsfamra2/iconfont.css">
+    <link rel="stylesheet" href="" id='bugcss'>
+	<script type="text/javascript">
+		document.querySelector('#bugcss').href='../../layuiadmin/style/bug.css?v=1.0&code='+new Date();
+	</script>
+
+    <script src="../../js/echarts.js"></script>
+    <style>
+        .cardSelected{
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body ng-app="ia" ng-controller="envMoniterController" ng-init="getFarmInfo();getRealDataChart()">
+
+  <div class="layui-fluid myfarm3">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-row layui-col-space15">
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header">
+                  <div class="layui-row">
+                      <div class="layui-col-xs4"><img src="../../layuiadmin/style/res/template/w14.png" alt=""
+                                                      class="caller-img caller-fl" width="30px" height="30px"><strong>{{device.location}}监测站</strong></div>
+                      <div class="layui-col-xs4">设备总数：共{{realTimeDataList.length}}台</div>
+                  </div>
+              </div>
+              <div class="layui-card-body tubox">
+                <img src="../../layuiadmin/style/res/template/farm.png" alt="" class="tubox-img layui-col-lg5 layui-col-md6 layui-col-sm7 layui-col-xs6" />
+                <div class="tubox-list my-bigfont">
+                    <span><strong>设备ID号：</strong>{{device.sn}}</span>
+                    <span><strong>设备状态：</strong>{{state[device.state]}}</span>
+                    <span><strong>软件版本：</strong>V{{device.softwareVersion}}</span>
+                    <span><strong>Tel:</strong><addr title="phone">{{farm.telephone}}</addr></span>
+                </div>
+              </div>
+              <!--<div class="layui-card-body">
+									<div class="layui-row">
+											<div class="layui-carousel layadmin-shortcut layadmin-carousel my-height1">
+												<div carousel-item>
+													<div class="testing layui-col-space clearfix">
+														<div class="tleft layui-col-xs6" style="background: url(../../layuiadmin/style/res/template/farm.png) center no-repeat;background-size: cover;"></div>
+														<div class="tright layui-col-xs6">
+															<div class="trightbox">
+																<span><strong>设备ID号：</strong>{{device.sn}}</span>
+																<span><strong>设备状态：</strong>{{state[device.state]}}</span>
+																<span><strong>软件版本：</strong>V{{device.softwareVersion}}</span>
+																<span><addr title="phone"><strong>Tel:</strong>{{farm.telephone}}</addr></span>
+															</div>
+														</div>
+													</div>
+													<ul class="layuiayui-col-xs6">
+															<div class="-row layui-col-space10">
+														<li class="llayadmin-text-center">
+																<img src="../../layuiadmin/style/res/template/farm.png" width="100%" height="auto">
+															</div>
+														</li>
+														<li class="layui-col-xs6">
+																<h3 class="layadmin-title">
+                                                            <strong>当前时间:</strong>{{currentTime | date:'yyyy-MM-dd hh:mm:ss'}}
+                                                        </h3>
+																<p class="layadmin-textimg">
+																	<strong>当前位置：</strong>{{device.location}}
+																</p>
+															<div class="layadmin-address">
+																<a href="javascript:;">
+																	<strong>设备ID号：</strong>{{device.sn}}
+																	<br>
+																	<strong>设备状态：</strong>{{state[device.state]}}
+																	<br>
+																	<strong>软件版本：</strong>V{{device.softwareVersion}}
+																	<br>
+																	<addr title="phone"><strong>Tel:</strong></addr>
+																	{{farm.telephone}}
+																</a>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+                  <div class="layui-row layui-col-space10">
+                      <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                          <div carousel-item>
+                              <ul class="layui-row layui-col-space10">
+                                  <li class="layui-col-xs6">
+                                      <a href="javascript:;">
+                                          <div class="layadmin-text-center">
+                                              <img src="../../layuiadmin/style/res/template/farm.png" width="100%" height="100%">
+                                          </div>
+                                      </a>
+                                  </li>
+                                  <li class="layui-col-xs6 layui-col-md6 layui-col-sm6" style="text-align:left">
+                                      <a href="javascript:;">
+                                          <h3 class="layadmin-title">
+                                              <strong>当前时间:</strong>{{currentTime | date:'yyyy-MM-dd hh:mm:ss'}}
+                                          </h3>
+                                          <p class="layadmin-textimg">
+                                              <strong>当前位置：</strong>{{device.location}}
+                                          </p>
+                                      </a>
+                                      <div class="layadmin-address">
+                                          <a href="javascript:;">
+                                              <strong>设备ID号：</strong>{{device.sn}}
+                                              <br>
+                                              <strong>设备状态：</strong>{{state[device.state]}}
+                                              <br>
+                                              <strong>软件版本：</strong>V{{device.softwareVersion}}
+                                              <br>
+                                              <addr title="phone"><strong>Tel:</strong></addr>
+                                              {{farm.telephone}}
+                                          </a>
+                                      </div>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>-->
+            </div>
+          </div>
+          <div class="layui-col-md12">
+            <div class="layui-card">
+              <div class="layui-card-header">操作控制</div>
+              <div class="layui-card-body">
+              	<ul class="layui-row layui-col-space10 yjsysoperation my-bigfont2">
+                          <li class="layui-col-xs4">
+                              <a lay-href="home/homepage1.html">
+                                  <i class="layui-icon layui-icon-console"></i>
+                                  <cite class='nonowrap'>已开机1</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="home/homepage2.html">
+                                  <i class="layui-icon layui-icon-chart"></i>
+                                  <cite class='nonowrap'>远程升级</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="component/layer/list.html">
+                                  <i class="layui-icon layui-icon-template-1"></i>
+                                  <cite class='nonowrap'>设备日志</cite>
+                              </a>
+                          </li>
+                          <!--<li class="layui-col-xs4">
+                              <a layadmin-event="im">
+                                  <i class="layui-icon layui-icon-chat"></i>
+                                  <cite class='nonowrap'>拍个照</cite>
+                              </a>
+                          </li>-->
+                          <li class="layui-col-xs4">
+                              <a lay-href="component/progress/index.html">
+                                  <i class="layui-icon layui-icon-find-fill"></i>
+                                  <cite class='nonowrap'>照片列表</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="app/workorder/list.html">
+                                  <i class="layui-icon layui-icon-survey"></i>
+                                  <cite class='nonowrap'>数据下载</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="user/user/list.html">
+                                  <i class="layui-icon layui-icon-user"></i>
+                                  <cite class='nonowrap'>阈值设置</cite>
+                              </a>
+                          </li>
+                          <!--<li class="layui-col-xs4">
+                              <a lay-href="set/system/website.html">
+                                  <i class="layui-icon layui-icon-set"></i>
+                                  <cite class='nonowrap'>聊天</cite>
+                              </a>
+                          </li>-->
+                      </ul>
+                <!--<div class="layui-carousel layadmin-carousel my-height1 layadmin-backlog">
+                  <div carousel-item>
+                      <ul class="layui-row layui-col-space10 yjsysoperation">
+                          <li class="layui-col-xs4">
+                              <a lay-href="home/homepage1.html">
+                                  <i class="layui-icon layui-icon-console"></i>
+                                  <cite>已开机</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="home/homepage2.html">
+                                  <i class="layui-icon layui-icon-chart"></i>
+                                  <cite>远程升级</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="component/layer/list.html">
+                                  <i class="layui-icon layui-icon-template-1"></i>
+                                  <cite>设备日志</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a layadmin-event="im">
+                                  <i class="layui-icon layui-icon-chat"></i>
+                                  <cite>拍个照</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="component/progress/index.html">
+                                  <i class="layui-icon layui-icon-find-fill"></i>
+                                  <cite>照片列表</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="app/workorder/list.html">
+                                  <i class="layui-icon layui-icon-survey"></i>
+                                  <cite>数据下载</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="user/user/list.html">
+                                  <i class="layui-icon layui-icon-user"></i>
+                                  <cite>阈值设置</cite>
+                              </a>
+                          </li>
+                          <li class="layui-col-xs4">
+                              <a lay-href="set/system/website.html">
+                                  <i class="layui-icon layui-icon-set"></i>
+                                  <cite>聊天</cite>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+                </div>-->
+              </div>
+            </div>
+          </div>
+          <!--<div class="layui-col-md12">-->
+                <!--<div class="layui-card">-->
+                    <!--<div class="layui-card-header">实时数据</div>-->
+                    <!--<div class="layui-card-body">-->
+                        <!--&lt;!&ndash;<div class="layui-carousel layadmin-carousel my-height1  layadmin-shortcut changeheight">-->
+                            <!--<div carousel-item>&ndash;&gt;-->
+                                <!--<ul class="layui-row layui-col-space10" id="realData1">-->
+                                    <!--<li class="layui-col-xs3 {{isSelectData(realTimeData)?'cardSelected':''}}" name="dataCard" id="{{realTimeData.deviceId}}" ng-repeat="realTimeData in realTimeDataList">-->
+                                        <!--<a ng-click="selectData(realTimeData)">-->
+                                            <!--<i class="layui-icon {{layuiCssClass[$index]}}"></i>-->
+                                            <!--<cite class="nonowrap">{{realTimeData.measureUnitType}}:{{realTimeData.basicData}}{{realTimeData.measurementUnitName}}</cite>-->
+                                        <!--</a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--&lt;!&ndash;</div>-->
+                        <!--</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">实时数据</div>
+                    <div class="layui-card-body">
+                        <div class="layui-carousel layadmin-carousel my-height1 layadmin-shortcut changeheight">
+                            <div carousel-item>
+                                <ul class="layui-row layui-col-space10" id="realData1">
+                                    <li class="layui-col-xs3 {{isSelectData(realTimeData)?'cardSelected':''}}" name="dataCard" id="{{realTimeData.deviceId}}" ng-repeat="realTimeData in realTimeDataList">
+                                        <a ng-click="selectData(realTimeData)">
+                                            <i class="layui-icon {{layuiCssClass[$index]}}"></i>
+                                            <cite class="nonowrap">{{realTimeData.measureUnitType}}:{{realTimeData.basicData}}{{realTimeData.measurementUnitName}}</cite>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <div class="layui-col-md12" id="echartsbug">
+              <div class="layui-card">
+                  <!--<div class="layui-card-header">监测趋势图</div>-->
+
+                  <form name="form" class="layui-form" action="" lay-filter="component-form-element" ng-click="changeTime()">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">趋势图：</label>
+                          <div class="layui-input-block">
+                              <input type="radio" name="timeUnit" value="MONTH" title="月">
+                              <input type="radio" name="timeUnit" value="DAY" title="天">
+                              <input type="radio" name="timeUnit" value="HOUR" title="时" checked>
+                          </div>
+                      </div>
+                  </form>
+                  <div class="layui-card-body">
+                      <div class="layui-carousel layadmin-carousel my-height1 layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
+                          <div carousel-item id="realDataView"></div>
+                          <div></div>
+                          <div></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js?t=1"></script>
+  <script src="../../js/angularjs/angular.min.js"></script>
+
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'console']);
+
+
+  //这样就能在这里使用jquery了
+  layui.use('layer', function(){
+      var $ = layui.$
+          ,layer = layui.layer;
+
+  });
+
+  var app=angular.module('ia',[]);//envMoniterController
+  app.controller('envMoniterController',function ($scope,$http,$location) {
+      //使用anguljs双向绑定
+      $scope.layuiCssClass=['layui-icon-console','layui-icon-chart','layui-icon-template-1','layui-icon-find-fill',
+          'layui-icon-survey','layui-icon-user','layui-icon-set','layui-icon-about','layui-icon-camera-fill','layui-icon-website','layui-icon-about'];
+
+      $scope.currentTime=new Date();
+      //设备状态: 0 在线    1 离线
+      $scope.state=['在线','离线'];
+      //当前基地页面全部信息
+      $scope.getFarmInfo=function (farmId) {
+          //通过地址栏传递参数
+          $scope.actveDeviceId= $location.search()['deviceId'];//获取参数值
+          //console.log($scope.actveDeviceId);
+
+          $http.get('/farms/info/3/3').then(function (response) {
+              $scope.user=response.data.user;
+              $scope.farm=response.data.farm;
+              //农情通知
+              $scope.recentlyNoticeList=response.data.recentlyNoticeList;
+              //设备报警
+              $scope.deviceNoticeList=response.data.deviceNoticeList;
+              //当前农场的设备列表信息
+              $scope.deviceList=response.data.deviceList;
+              $scope.deviceIndex=0;
+              $scope.device=$scope.deviceList[$scope.deviceIndex];
+
+              //设备实时数据
+              $scope.realTimeDataList=response.data.realTimeDataList;
+
+              //如果设备是从我的基地页面跳过来的,那就将我的基地点击的数据变成默认值
+              if ($scope.actveDeviceId!=undefined) {
+                  for (var i=0;i<$scope.realTimeDataList.length;i++) {
+                      if ($scope.realTimeDataList[i].deviceId==$scope.actveDeviceId) {
+                          $scope.realTimeData=$scope.realTimeDataList[i];
+                          break;
+                      }
+                  }
+              }
+
+              //摄像头列表
+              $scope.vedioList=response.data.vedioList;
+              $scope.vedioIndex=0;
+              $scope.vedio=$scope.vedioList[$scope.vedioIndex];
+
+          });
+      }
+
+      //上一个下一个设备的处理方式,可以根据设备列表的索引处理
+      //上下循环
+      $scope.switchDevice=function (incr) {
+          $scope.deviceIndex=$scope.deviceIndex+incr;
+          if ($scope.deviceIndex<0){
+              $scope.deviceIndex=$scope.deviceList.length-1;
+          }
+          if ($scope.deviceIndex>=$scope.deviceList.length){
+              $scope.deviceIndex=0;
+          }
+          $scope.device=$scope.deviceList[$scope.deviceIndex];
+      }
+
+      //上下循环摄像头
+      $scope.switchVedio=function (incr) {
+          $scope.vedioIndex=$scope.vedioIndex+incr;
+          if ($scope.vedioIndex<0){
+              $scope.vedioIndex=$scope.vedioList.length-1;
+          }
+          if ($scope.vedioIndex>=$scope.vedioList.length){
+              $scope.vedioIndex=0;
+          }
+          $scope.vedio=$scope.vedioList[$scope.vedioIndex];
+      }
+
+
+      //可以单选实时数据,并高亮显示,将折线图同步进行变化
+      $scope.selectData=function(realTimeData){
+          $scope.realTimeData=realTimeData;
+
+          //将折线图的默认数据清空
+          option.xAxis.data=[];
+          angular.forEach(option.series,function (data,index) {
+              option.series[index].data=[];
+          });
+          option.legend.data=[];
+
+          var i=0;
+          angular.forEach($scope.responseData,function(deviceDataList,indexI){
+              angular.forEach(deviceDataList,function (deviceData, indexJ) {
+                  if (i===0){
+                      option.xAxis.data.push(deviceData.hour);
+                      option.legend.data.push(realTimeData.measureUnitType)
+                  }
+                  if (realTimeData.deviceId== deviceData.deviceId) {
+                      option.series[i].data.push(deviceData.avg);
+                      return;
+                  }
+
+              });
+              i++;
+              if (i>deviceDataList.length) {
+                  return;
+              }
+          })
+          realDataViewChart.setOption(option);
+      }
+
+      $scope.isSelectData=function(realTimeData){
+          if (realTimeData == $scope.realTimeData) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+
+      //按年,月,日分别进行显示
+      $scope.changeTime=function(){
+          $scope.timeUnit=document.form.timeUnit.value;
+          $scope.getRealDataChart($scope.timeUnit);
+      }
+
+      $scope.getRealDataChart=function (timeUnit) {
+          //通过地址栏传递参数
+          $scope.actveDeviceId= $location.search()['deviceId'];//获取参数值
+
+          $http.get('../../deviceGathers/echartsShow?timeUnit='+timeUnit).then(function (response) {
+              //将折线图的默认数据清空
+              option.xAxis.data=[];
+              angular.forEach(option.series,function (data,index) {
+                  option.series[index].data=[];
+              });
+
+              $scope.responseData=response.data;
+              //console.log($scope.responseData);
+              var i=0;
+              angular.forEach(response.data,function(deviceDataList,indexI){
+
+                  if ($scope.actveDeviceId != undefined) {
+                      angular.forEach(deviceDataList,function (deviceData, indexJ) {
+                          //console.log(deviceData)
+                          //x轴只需要赋值一次
+                          if (i===0){
+                              option.xAxis.data.push(deviceData.hour);
+                          }
+                          if ($scope.actveDeviceId == deviceData.deviceId) {
+                              option.series[i].data.push(deviceData.avg);
+                              return;
+                          }
+
+                      });
+                  } else {
+                      angular.forEach(deviceDataList,function (deviceData, indexJ) {
+                          //console.log(deviceData)
+                          //x轴只需要赋值一次
+                          if (i===0){
+                              option.xAxis.data.push(deviceData.hour);
+                          }
+                          option.series[i].data.push(deviceData.avg);
+
+                      });
+                  }
+
+                  i++;
+                  if (i>deviceDataList.length) {
+                      return;
+                  }
+              })
+              //console.log(option)
+              realDataViewChart.setOption(option);
+          })
+      }
+
+  });
+  </script>
+
+  <!--折线图-->
+  <script type="text/javascript">
+
+      option = {
+          tooltip: {
+              trigger: 'axis'
+          },
+          legend: {
+              data:['空气温度','空气湿度','光照','土壤温度','土壤湿度','电导率','PH值'],
+              x: 'left',
+              y: 'top'
+          },
+          grid: {
+              left: '3%',
+              right: '5%',
+              bottom: '3%',
+              containLabel: true
+          },
+          toolbox: {
+              feature: {
+                  // mark: {show: true},
+                  // dataView: {show: true, readOnly: false},
+                  magicType: {show: true, type: ['line', 'bar']},
+                  // restore: {show: true},
+                  saveAsImage: {show: true}
+              }
+          },
+          xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: ['00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00']
+          },
+          yAxis: {
+              type: 'value'
+          },
+          series: [
+              {
+                  name:'空气温度',
+                  type:'line',
+                  stack: '总量',
+                  data:[120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              },
+              {
+                  name:'空气湿度',
+                  type:'line',
+                  stack: '总量',
+                  data:[220, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              },
+              {
+                  name:'光照',
+                  type:'line',
+                  stack: '总量',
+                  data:[320, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              },
+              {
+                  name:'土壤温度',
+                  type:'line',
+                  stack: '总量',
+                  data:[420, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              },
+              {
+                  name:'土壤湿度',
+                  type:'line',
+                  stack: '总量',
+                  data:[520, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              }
+              ,
+              {
+                  name:'电导率',
+                  type:'line',
+                  stack: '总量',
+                  data:[620, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              }
+              ,
+              {
+                  name:'PH值',
+                  type:'line',
+                  stack: '总量',
+                  data:[720, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210,120, 132, 101, 134, 90, 230, 210]
+              }
+          ]
+      };
+      // 基于准备好的dom，初始化echarts实例
+      var realDataViewChart = echarts.init(document.getElementById('realDataView'));
+  </script>
+  <!--温度-->
+</body>
+</html>
+

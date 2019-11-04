@@ -1,0 +1,234 @@
+
+.nonowrap{
+    font-size: 14px!important;
+}
+
+@media screen and (max-width: 550px) {
+    .nonowrap{
+        white-space:normal!important;
+        overflow:initial!important;
+        text-overflow:initial!important;
+    }
+}
+@media screen and (max-width: 540px) {
+    .changeheight{
+        height:230px!important;
+    }
+}
+/*@media screen and (min-width:500px) and (max-width:550px){*/
+/*.changeheight{*/
+/*height:230px!important;*/
+/*}*/
+/*}*/
+
+#realDataView>div:last-of-type{
+    width:auto!important;
+    height: auto!important;
+}
+/*修改样式*/
+.yjsysoperation .layui-col-xs3{
+    margin-bottom: 10px;
+    transition: all .5s;
+}
+.yjsysoperation .layui-col-xs3:hover{
+    background: #1AA094;
+    border-radius: 5px;
+}
+.yjsysoperation .layui-col-xs3:hover a{
+    color: white!important;
+}
+
+
+/*首页新增内容*/
+.clearfix::before,.clearfix::after{
+    clear: both;
+    display: table;
+    content: '';
+}
+.my-farm{
+    border: 1px solid #999;
+}
+.my-farm .myfarm-title{
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+    line-height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid #666;
+}
+.my-farm .myfarm-title span{
+    font-weight: normal;
+    font-size: 12px;
+}
+.my-farm .myfarm-main{
+    padding: 20px;
+    box-sizing: border-box;
+    background: white;
+}
+
+.my-farm .myfarm-main li{
+    background: url("../../img/avatars/yuandian.png") 0 center no-repeat;
+    background-size: 20px;
+    color: #666;
+    width: 100%;
+    padding-left: 20px;
+    box-sizing: border-box;
+    float: left;
+    line-height: 35px;
+
+ }
+.my-farm .myfarm-main .li{
+    width: 50%;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+.my-farm2 .myfarm-main{
+   height: 70px;
+}
+/*2019.4.18*/
+.myfarm3 .ul2{
+	min-height: 50px;
+}
+/*.myfarm3 .layui-card-header{
+	display: flex;
+	justify-content: space-between;
+}*/
+/*@media screen and (max-width: 991px) {
+    .myfarm3 .a1 .layui-col-md6:nth-of-type(2){
+        margin-top: -7.5px;
+    }
+}*/
+/*.myfarm3 .testing{
+	display: flex;
+	justify-content: space-between;
+	height: 1em;
+}
+.myfarm3 .testing .tleft,.myfarm3 .testing .tright{
+	height: 100%;
+}
+.myfarm3 .testing .tright .trightbox{
+	padding-left: 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+*/
+
+
+/*改全局表格*/
+.layui-container.form-main{
+	width: 100%!important;
+}
+/*.myfarm3 .trightbox span{
+	font-size: 14px;
+}
+.myfarm3 .margin-b10{
+	margin-bottom: 10px;
+}
+.myfarm3 .myrem{
+	height: 2.2em;
+}
+.mydatabox{
+	height: 1em;
+}
+.mydatabox .titlebox{
+	line-height: 0.2em;
+	height: 0.2em;
+}
+.mydatabox .detailbox{
+	height: 1em;
+}
+.mydatabox .titlebox .title{
+	font-size: 14px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	
+}
+.mydatabox .detailbox .detail,.mydatabox .detailbox .detail a{
+	font-size: 14px;
+	line-height: 20px;
+}*/
+/*改表头样式*/
+table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting{
+	padding-right: 21px!important;
+}
+
+
+/*再次重做首页排版*/
+.myfarm3 .tubox{
+	display: flex;
+}
+.myfarm3 .tubox .tubox-img{
+	display: block;
+	height: 100%;
+	align-self: center;
+}
+.myfarm3 .tubox .tubox-list{
+	flex: 1;
+	margin-left: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: 12px;
+}
+.myfarm3 .my-flex{
+	display: flex;
+	justify-content: space-between;
+}
+/*改农情间距*/
+.myfarm3 .ul2 li{
+	line-height: 40px;
+}
+/*envmoniter页面模块高度*/
+
+.my-height1{
+	height: 150px;
+}
+
+
+/*再次更改页面首页的hover效果 */
+/*之前的拿来对比*/
+#realData1 .layui-col-xs3:hover,#realData1 .layui-col-md3:hover, #realData1 .layui-col-sm4:hover,#realData1 .layui-col-xs6:hover{
+background: #1AA094;
+border-radius: 5px;
+color: white!important;
+}
+#realData1 .layui-col-xs3:hover i,#realData1 .layui-col-md3:hover i, #realData1 .layui-col-sm4:hover i,#realData1 .layui-col-xs6:hover i{
+color: #1AA094!important;
+}
+#realData1 .layui-col-xs3:hover cite,#realData1 .layui-col-md3:hover cite, #realData1 .layui-col-sm4:hover cite,#realData1 .layui-col-xs6:hover cite{
+color: white!important;
+}
+.my-hover{
+    display: block;
+}
+/*.my-hover li:hover a{*/
+	/*background: #1AA094;*/
+    /*border-radius: 5px;*/
+    /*color: white!important;*/
+/*}*/
+/*.my-hover li:hover a i{*/
+	/*color: #1AA094!important;*/
+/*}*/
+/*.my-hover li:hover a cite{*/
+	/*color: #1AA094!important;*/
+/*}*/
+
+.my-bigfont>span{
+	font-size: 20px;
+}
+
+.my-bigfont2{
+	font-size: 14px!important;
+}
+@media screen and (max-width: 991px) {
+    .my-bigfont>span{
+		font-size: 16px;
+	}
+	.my-bigfont2{
+		font-size: 14px!important;
+	}
+}

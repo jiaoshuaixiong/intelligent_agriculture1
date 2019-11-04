@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的基地首页一</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/layui/font/font_2wmcsfamra2/iconfont.css">
+		<!--<link rel="stylesheet" href="../../layuiadmin/style/bug.css">-->
+		<link rel="stylesheet" href="" id='bugcss'>
+		<script type="text/javascript">
+			document.querySelector('#bugcss').href = '../../layuiadmin/style/bug.css?v=1.0&code=' + new Date();
+		</script>
+	</head>
+	<body ng-app="ia" ng-controller="myFarmController" ng-init="getFarmInfo()">
+		<div class="layui-fluid myfarm3">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header my-flex"><strong>我的基地</strong><span><a href="updateSomeInfo.html?id={{farm.id}}">编辑</a></span></div>
+						<div class="layui-card-body">
+							<ul class="clearfix">
+								<li class="li">基地名称：{{farm.name}}</li>
+								<li class="li">主要作物：{{farm.mainCrop}}</li>
+								<li class="li">基地地址：{{farm.province}}/{{farm.city}}/{{farm.district}}</li>
+								<li class="li">基地面积：{{farm.area}}亩</li>
+								<li class="li">基地负责人：{{farm.linkman}}</li>
+								<li class="li">负责人手机：{{farm.telephone}}</li>
+								<li>基地介绍：{{farm.remark}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15 a1">
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header my-flex">
+							<strong>农情通知</strong>
+							<span><a href="../notice/noticeList.html">更多</a></span></div>
+						<div class="layui-card-body">
+							<!--<ul class="ul2 clearfix">
+								<li class="li">农业局通知</li>
+								<li class="li">高温橙色预警通知</li>
+							</ul>-->
+							<ul class="ul2 clearfix" id="notice"></ul>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header my-flex">
+							<strong>农事活动</strong>
+							<span><a href="../husbandry/product_batche/product_batche_list.html">更多</a></span></div>
+						<div class="layui-card-body">
+							<ul class="ul2 clearfix" id="clearfix">
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15" ng-if="user.username=='admin'">
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header my-flex">
+							<strong>农情通知</strong>
+							<div class="layui-btn-group layuiadmin-btn-group">
+								<a href="/pages/notice/noticeList.html" class="layui-btn layui-btn-normal layui-btn-sm">更多...</a>
+							</div>
+						</div>
+						<div class="layui-card-body">
+							<table class="layui-table layuiadmin-page-table" lay-skin="line">
+								<tbody>
+									<tr ng-repeat="recentlyNotice in recentlyNoticeList">
+										<td><i class="layui-icon layui-icon-praise"></i><span class="{{titleColorCssClass[$index]}}">{{recentlyNotice.title}}</span></td>
+										<td><i class="layui-icon layui-icon-log">{{recentlyNotice.createTime}}</i></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card my-flex">
+						<div class="layui-card-header">
+							<strong>设备日志</strong>
+							<div class="layui-btn-group layuiadmin-btn-group">
+								<a href="/pages/device/log/deviceLogList.html" class="layui-btn layui-btn-normal layui-btn-sm">更多...</a>
+							</div>
+						</div>
+						<div class="layui-card-body">
+							<table class="layui-table layuiadmin-page-table" lay-skin="line">
+								<tbody>
+									<tr ng-repeat="deviceNotice in deviceNoticeList">
+										<td><i class="layui-icon layui-icon-praise"></i><span class="{{titleColorCssClass[$index]}}">[{{deviceNotice.deviceName}}]{{deviceNotice.content}}</span></td>
+										<td><i class="layui-icon layui-icon-log">{{deviceNotice.createTime}}</i></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md6 modela">
+					<div class="cardbox">
+						<div class="layui-card">
+						  <div class="layui-card-header my-flex">
+						  	<strong>{{device.location}}</strong>
+							<div class="layui-btn-group layuiadmin-btn-group">
+								<a ng-if="user.username=='admin'" href="javascript:;" class="layui-btn layui-btn-normal layui-btn-sm" >设置</a>
+								<a ng-click="switchDevice(-1)" class="layui-btn layui-btn-normal layui-btn-sm">上一个</a>
+								<a ng-click="switchDevice(1)" class="layui-btn layui-btn-normal layui-btn-sm">下一个</a>
+								<a ng-if="user.username=='admin'" href="../device/addDevice.html" class="layui-btn layui-btn-normal layui-btn-sm">新增</a>
+							</div>
+						  </div>
+						  <div class="layui-card-body tubox">
+						  	<img src="../../layuiadmin/style/res/template/farm.png" alt="" class="tubox-img layui-col-sm6 layui-col-xs5" />
+						  	<div class="tubox-list">
+						  		<span><strong>设备ID号：</strong>{{device.sn}}</span>
+								<span><strong>设备状态：</strong>{{state[device.state]}}</span>
+								<span><strong>软件版本：</strong>V{{device.softwareVersion}}</span>
+								<span><strong>Tel:</strong><addr title="phone">{{farm.telephone}}</addr></span>
+						  	</div>
+						  </div>
+						</div>
+					</div>
+					<div class="cardbox">
+						<div class="layui-card">
+						  <div class="layui-card-header my-flex">
+						  	<strong>实时数据</strong>
+						  </div>
+						  <div class="layui-card-body">
+						   <ul class="detail my-hover layui-row layui-col-space10" id="realData1">
+								<li class="layui-col-md3 layui-col-sm4 layui-col-xs6" ng-repeat="realTimeData in realTimeDataList">
+									<a ng-click="toEnvMoniter(realTimeData.deviceId)">
+										<i class="layui-icon {{layuiCssClass[$index]}}"></i>
+										<cite class="nonowrap"><strong>{{realTimeData.measureUnitType}}:{{realTimeData.basicData}}{{realTimeData.measurementUnitName}}</strong></cite>
+									</a>
+								</li>
+							</ul>
+						  </div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="cardbox">
+						<div class="layui-card modelb">
+						  <div class="layui-card-header my-flex">
+						  	<strong>{{vedio.name}} </strong>
+							<div class="layui-btn-group layuiadmin-btn-group">
+								<a ng-href="../device/vedio/vedio.html" class="layui-btn layui-btn-normal layui-btn-sm">视频控制</a>
+								<a ng-click="switchVedio(-1)" class="layui-btn layui-btn-normal layui-btn-sm">上一个</a>
+								<a ng-click="switchVedio(1)" class="layui-btn layui-btn-normal layui-btn-sm">下一个</a>
+								<a href="../device/vedio/addVedio.html" class="layui-btn layui-btn-normal layui-btn-sm">新增</a>
+							</div>
+						  </div>
+						  <div class="layui-card-body">
+                            <div ng-show="vedio.farmId==35 && vedio.userId==7 &&vedioIndex==0">
+                                <video type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player1" poster="" controls playsInline webkit-playsinline  autoplay>
+                                    <source  src="http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8"  type="application/x-mpegURL"/>
+                                    <source src="https://open.ys7.com/view/h5/a523364e367a4ba4856d23bb5edc1b44" />>
+                                </video>
+                            </div>
+                            <div ng-show="vedio.farmId==39 && vedio.userId==4 && vedio.id==6">
+                                <video  type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player2" poster="" controls playsInline webkit-playsinline autoplay >
+                                    <source  src="http://hls01open.ys7.com/openlive/26d514ed086744f681cbd2487cc219ef.hd.m3u8" type="application/x-mpegURL"/>
+                                </video>
+                            </div>
+                            <div ng-show="vedio.id==1">
+                                <video src="http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8" type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player3" poster="" controls playsInline webkit-playsinline  >
+                                </video>
+                            </div>
+                            <div ng-show="vedio.farmId==35 && vedio.userId==7&&vedioIndex==1">
+                                <video  type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player4" poster="" controls playsInline webkit-playsinline autoplay >
+                                  <source  src="http://hls01open.ys7.com/openlive/a709e0e46bf94762a902d9278410e23e.m3u8" type="application/x-mpegURL"/>
+                                </video>
+                            </div>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+		<script src="../../layuiadmin/layui/layui.js?t=1"></script>
+		<script src="../../js/angularjs/angular.min.js"></script>
+		<script src="../../videojs/ezuikit.js"></script>
+		<script src="../../js/jquery-2.1.1.min.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'console']);
+
+			data = {
+				accessToken: 'at.7x6uuoq80n16eob4abz2c4o9b1iv9okl-5j1vcm88mq-1tb8lrq-cwhbfstom',
+				deviceSerial: 'C32944171',
+				channelNo: '1'
+			}
+
+			//这样就能在这里使用jquery了
+			layui.use('layer', function() {
+				var $ = layui.$,
+					layer = layui.layer;
+
+			});
+
+			var app = angular.module('ia', []); //myFarmController
+			app.controller('myFarmController', function($scope, $http,$sce) {
+				//使用anguljs双向绑定
+				$scope.layuiCssClass = ['layui-icon-console', 'layui-icon-chart', 'layui-icon-template-1', 'layui-icon-find-fill', 'layui-icon-survey', 'layui-icon-user', 'layui-icon-set', 'layui-icon-about', 'layui-icon-camera-fill', 'layui-icon-website', 'layui-icon-about'];
+
+				$scope.titleColorCssClass = ['first', 'second', 'third'];
+                $scope.uuu=$sce.trustAsResourceUrl("http://hls01open.ys7.com/openlive/26d514ed086744f681cbd2487cc219ef.m3u8");
+				$scope.currentTime = new Date();
+				//设备状态: 0 在线    1 离线
+				$scope.state = ['在线', '离线'];
+				//当前基地页面全部信息
+				$scope.getFarmInfo = function(farmId) {
+					$http.get('/farms/info/3/3').then(function(response) {
+						$scope.user = response.data.user;
+						$scope.farm = response.data.farm;
+
+						localStorage.setItem("farmid", $scope.farm.id);
+						//农情通知
+						$scope.recentlyNoticeList = response.data.recentlyNoticeList;
+						//设备报警
+						$scope.deviceNoticeList = response.data.deviceNoticeList;
+						//当前农场的设备列表信息
+						$scope.deviceList = response.data.deviceList;
+						$scope.deviceIndex = 0;
+						$scope.device = $scope.deviceList[$scope.deviceIndex];
+
+						//设备实时数据
+						$scope.realTimeDataList = response.data.realTimeDataList;
+						//摄像头列表
+						$scope.vedioList = response.data.vedioList;
+						$scope.vedioIndex = 0;
+						$scope.vedio = $scope.vedioList[$scope.vedioIndex];
+					/*	$scope.name=$scope.vedio.id;*/
+
+					})
+					//农情通知列表
+                    $http.get('/notices/2').then(function(response) {
+                        response = response.data;
+                       // console.log(response.size());
+						//console.log(response);
+						var count=1;
+						var lis="";
+                        for (var i=0;i<response.data.length;i++){
+                            var data = response.data[i];
+                            //console.log(data);
+                            if (count>2){
+                                break;
+							}
+                            var str = data.updateTime.split(' ')[0];
+							var li="<li class=\"li\">"+data.title+" 更新时间:"+str+"</li>"
+							count++;
+                            lis+=li;
+						}
+						$("#notice").html(lis);
+                    })
+					$http.get('/tTasks/success').then(function(response) {
+						response = response.data;
+						if(response.code == "0") {
+							var count = 1;
+							var lis = "";
+							for(var i = 0; i < response.data.length; i++) {
+								var data = response.data[i];
+								if(count > 2) {
+									break;
+								}
+								// console.log(data.finishDate)
+                                var str = data.finishDate.split(' ')[0]
+								var li = "<li class=\"li\">" + data.username + "已完成" + data.content +
+									" 完成时间:" + str + "</li>"
+								count++;
+								lis += li;
+							}
+							$("#clearfix").html(lis);
+						}
+					})
+				}
+
+				//上一个下一个设备的处理方式,可以根据设备列表的索引处理
+				//上下循环
+				$scope.switchDevice = function(incr) {
+					$scope.deviceIndex = $scope.deviceIndex + incr;
+					if($scope.deviceIndex < 0) {
+						$scope.deviceIndex = $scope.deviceList.length - 1;
+					}
+					if($scope.deviceIndex >= $scope.deviceList.length) {
+						$scope.deviceIndex = 0;
+					}
+					$scope.device = $scope.deviceList[$scope.deviceIndex];
+				}
+
+				//上下循环摄像头
+				$scope.switchVedio = function(incr) {
+					$scope.vedioIndex = $scope.vedioIndex + incr;
+					if($scope.vedioIndex < 0) {
+						$scope.vedioIndex = $scope.vedioList.length - 1;
+					}
+					if($scope.vedioIndex >= $scope.vedioList.length) {
+						$scope.vedioIndex = 0;
+					}
+					$scope.vedio = $scope.vedioList[$scope.vedioIndex];
+				}
+
+				//点击实时数据图表跳转到环境监测页面
+				$scope.toEnvMoniter = function(deviceId) {
+					window.location = '../envmoniter/envMoniter.html#?deviceId=' + deviceId;
+				}
+
+			});
+
+
+            app.directive('embedSrc', function () {
+                return {
+                    restrict: 'A',
+                    link: function (scope, element, attrs) {
+                        var current = element;
+                        scope.$watch(attrs.embedSrc, function () {
+                            var clone = element
+                                .clone()
+                                .attr('src', attrs.embedSrc);
+                            current.replaceWith(clone);
+                            current = clone;
+                        });
+                    }
+                };
+            })
+			//点击设置跳转到对应的修改页面并回显数据
+
+			var player1 = new EZUIPlayer('player1');
+			var player2 = new EZUIPlayer('player2');
+			var player3 = new EZUIPlayer('player3');
+			var player4 = new EZUIPlayer('player4');
+            var player5 = new EZUIPlayer('player5');
+
+		</script>
+		<script>
+			window.onload=function(){
+
+					window.onresize = function(){
+						if(client().width<=991){
+							return
+						}
+						setTimeout(function(){
+							var adom = document.querySelector('.modela');
+							var h = adom.offsetHeight-15;
+		                    document.querySelector('.modelb').style.height = h+'px';
+						},1000)
+					}
+					window.onresize()
+				function client(){
+					return {
+						width:window.innerWidth|| document.documentElement.clientWidth|| document.body.clientWidth|| 0,
+						height:window.innerHeight|| document.documentElement.clientHeight|| document.body.clientHeight|| 0
+					}
+				}
+			}
+		</script>
+	</body>
+
+</html>

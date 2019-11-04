@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="../../js/city-picker/city-picker.css">
+    <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+    <script src="../../js/city-picker/city-picker.data.js"></script>
+    <script src="../../js/city-picker/city-picker.js"></script>
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <form class="form-horizontal" onsubmit="return false" id="form">
+        <fieldset>
+
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地成立时间</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='请选择基地的成立时间' type='text' name='createTime'
+                           id='createTime'
+                           data-bv-notempty='true'>
+                </div>
+            </div>
+
+
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地位置</label>
+                <div style="position: relative;" class='col-md-10'><!-- container -->
+                    <input id="city-picker1" size="40" name="position" readonly type="text">
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地类型</label>
+                <div class='col-md-10'>
+                    <select name="type" lay-verify="required" class='form-control input-sm' data-bv-notempty='true'  data-bv-notempty-message='类型不能为空'>
+                        <option value="">请选择一个基地类型</option>
+                        <option value="茶园">茶园</option>
+                        <option value="农庄">农庄</option>
+                        <option value="农家乐">农家乐</option>
+                        <option value="鱼塘">鱼塘</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地名称</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='请给您的基地起个高大上的名字吧' type='text' name='name' id='name'
+                           data-bv-notempty='true' data-bv-notempty-message='基地不能没有名字吧?'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地负责人</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='填入主人的姓名' type='text' name='linkman' id='linkman'
+                           data-bv-notempty='true' data-bv-notempty-message='基地负责人不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>手机号</label>
+                <div class='col-md-10'>
+                    <input class='form-control' lay-verify="required|phone" placeholder='填入基地的联系方式' type='text'
+                           name='telephone' id='telephone' data-bv-notempty='true'
+                           data-bv-notempty-message='请填入正确的手机号码'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>主要农作物</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='填入主要农作物' type='text' name='mainCrop' id='mainCrop'
+                           data-bv-notempty='true' data-bv-notempty-message='主要农作物不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>面积</label>
+                <div class='col-md-10'>
+                    <input class='form-control' placeholder='填入面积' type='number' name='area' id='area'
+                           data-bv-notempty='true' data-bv-notempty-message='面积不能为空'>
+                </div>
+            </div>
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>基地介绍</label>
+                <div class='col-md-10'>
+                    <textarea class='form-control' rows="10" placeholder='填入基地信息' type='text' name='remark'
+                              id='remark'></textarea>
+                </div>
+            </div>
+
+
+            <div class="form-actions">
+                <div class="row" align="center">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" onclick="javascript:history.back(-1)">返回</button>
+                        <button class="btn btn-primary" type="submit" onclick="add()">
+                            <i class="fa fa-save"></i> 保存
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript">
+    //初始化city-picker省市区三级联动
+    $("#city-picker1").citypicker();
+
+    layui.use(['layer', 'laydate'], function () {
+        var layer = layui.layer;
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#createTime',
+            type: 'date',
+            //range:true,//开启左右面板,可以进行日期范围的选择
+            //trigger: 'mouseover',//定义鼠标悬停时弹出控件
+            theme: '#393D49',//主题颜色
+            calendar: true//是否显示公历节日
+        });
+    });
+
+    function add() {
+        $('#form').bootstrapValidator();
+        var bootstrapValidator = $("#form").data('bootstrapValidator');
+        bootstrapValidator.validate();
+        if (!bootstrapValidator.isValid()) {
+            return;
+        }
+
+        var formdata = $("#form").serializeObject();
+        //得到citypicker格式的省市区信息  安徽省/芜湖市/鸠江区
+        var area = (formdata.position).split("/");
+        formdata.province = area[0];
+        formdata.city = area[1];
+        if (area.length>2) {
+            formdata.district = area[2];
+        }
+
+        formdata.createTime=new Date(formdata.createTime).getTime();
+
+        $.ajax({
+            type: 'post',
+            url: '/farms',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(formdata),
+            success: function (data) {
+                layer.msg("添加成功", {shift: -1, time: 1000}, function () {
+                    location.href = "farmList.html";
+                });
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

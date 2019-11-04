@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title></title>
+		<link rel="stylesheet" href="../css/mobile_globa.css" />
+		<link rel="stylesheet" href="../css/mobile_login.css" />
+		<script src="../js/rem.js"></script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header clearfix">
+				<a href="javascript:" class="left back"><img class="icon-left" src="../img/public/header-left.png"/>湖南机智物流</a>
+				<a href="#" class="right"><img class="icon-iconmore" src="../img/public/iconmore.png"/></a>
+			</div>
+			<div class="workstatus">
+				<p class="title">填写农事任务</p>
+			</div>
+			<div class="tasklist">
+				<ul class="task-add">
+					<li class="must"><span class="taskname">任务名称：</span>播种</li>
+					<li class="must p" data-li="0">
+						<span class="taskphoto">活动图片1：</span><input type="file" class="file" multiple><span class="showup">点击上传</span>
+						<div class="imgs"></div>
+					</li>
+					<li class="must p" data-li="1">
+						<span class="taskphoto">活动图片2：</span><input type="file" class="file" multiple><span class="showup">点击上传</span>
+						<div class="imgs"></div>
+					</li>
+					<li class="must p" data-li="2">
+						<span class="taskphoto">活动图片3：</span><input type="file" class="file" multiple><span class="showup">点击上传</span>
+						<div class="imgs"></div>
+					</li>
+					<li class="must"><span class="taskinfo">活动描述：</span><textarea class="area" name="" rows="" cols="" placeholder="请用24个汉字描述本次农业活动"></textarea></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/mobile_globa.js"></script>
+	<script>
+		$(function(){
+			$(".task-add").on("change","input[type='file']",function(){
+				imgPreview(this,$(this).parent().data('li'))
+			})
+			$('.task-add').on('click','.abs-close',function(){
+				$(this).parents('.imgs').prev().show()
+				$(this).parent().remove()
+			})
+			function imgPreview(fileDom,i) {
+				//判断是否支持FileReader
+		        if(!window.FileReader) {
+		            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+		        }
+		        //获取文件
+		        for(var item of fileDom.files){
+		        	 var imageType = /^image\//;
+			        //是否是图片
+			        if(!imageType.test(item.type)) {
+		        		alert('请选择图片！')
+			            return;
+			        }
+			        var reader = new FileReader();
+			        //读取完成
+			        reader.onload = function(e) {
+			            //图片路径设置为读取的图片
+						var bg = e.target.result;
+						var img = `<div class="myappendimg" style="background: url(${bg}) center no-repeat;background-size: cover;"><div class="abs-close">x</div></div>`
+			            $('.p').children('.imgs').eq(i).append(img)
+//			            
+			            $('.showup').eq(i).hide()
+			        };
+			        reader.readAsDataURL(item);
+			    }
+		    }
+		})
+	</script>
+</html>

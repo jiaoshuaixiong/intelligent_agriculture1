@@ -1,0 +1,157 @@
+/*login*/
+
+/*home*/
+body{
+	background: #ededed;
+}
+.userinfo{
+	padding: .5rem 0;
+	text-align: center;
+	background: #0078ad;
+	color: white;
+}
+.userinfo .userimg{
+	width: 1.2rem;
+	height: 1.2rem;
+	border-radius: 50%;
+}
+.userinfo .name,.userinfo .company{
+	font-size: .3rem;
+	line-height: .5rem;
+}
+.tasklist,.userout{
+	padding: .3rem;
+}
+.tasklist ul li{
+	margin-bottom: .3rem;
+}
+.tasklist ul li a{
+	display: block;
+	text-align: left;
+	padding: .2rem .5rem .2rem 1rem;
+	background: white;
+	font-size:  .3rem;
+	line-height: 1rem;
+	position: relative;
+}
+.tasklist .abs-status{
+	position: absolute;
+	left: .25rem;
+	top: .43rem;
+	width: auto;
+	height: .5rem;
+}
+.tasklist ul li .number{
+	color: #999;
+}
+.userout .out{
+	font-size: .3rem;
+	background: #0078ad;
+	color: white;
+	line-height: 1rem;
+}
+/*task*/
+.workstatus{
+	background: #0078AD;
+	padding: .3rem 0;
+	color: white;
+	text-align: center;
+}
+.workstatus .title{
+	font-size: .3rem;
+	line-break: .3rem;
+}
+.tasklist p{
+	line-height: .5rem;
+}
+.tasklist .task-title{
+	font-size: .32rem;
+	font-weight: 500;
+	color: #333;
+}
+.tasklist .task-time{
+	font-size: .28rem;
+	color: #999;
+}
+/*.workstatus .*/
+/*taskadd*/
+/*.task-add{
+	padding: .5rem 0;
+	text-align: center;
+	background: #0078ad;
+	color: white;
+}*/
+.task-add .must{
+	position: relative;
+}
+.task-add .must::after{
+	position: absolute;
+	right: .2rem;
+	top: .3rem;
+	content: "*";
+	color: red;
+}
+.tasklist .task-add li{
+	margin-bottom: .3rem;
+	display: block;
+	text-align: left;
+	padding: .2rem;
+	background: white;
+	font-size:  .3rem;
+	line-height: 1rem;
+	position: relative;
+}
+.tasklist .task-add .file{
+	/*visibility: hidden;*/
+	/*height: 2rem;*/
+}
+.tasklist .imgs{
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+.tasklist .myappendimg{
+	position: relative;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin-right: 0.1rem;
+	margin-bottom: 0.1rem;
+}
+.tasklist .myappendimg .abs-close{
+	position: absolute;
+	right: .05rem;
+	top: .05rem;
+	font-weight: bold;
+	font-size: 0.2rem;
+	background: rgba(255,255,255,.5);
+	color: white;
+	width: .3rem;
+	height: .3rem;
+	line-height: .3rem;
+	text-align: center;
+	border-radius: 50%;
+}
+.tasklist .showup{
+	color: #999;
+}
+.tasklist .area{
+	width: 4.5rem;
+	height: 1rem;
+	border: 0;
+	vertical-align: bottom;
+	font-size: .3rem;
+}
+
+.tasklist .p {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-indent: 0;
+}
+.tasklist .p input {
+    position: absolute;
+    font-size: 200px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}

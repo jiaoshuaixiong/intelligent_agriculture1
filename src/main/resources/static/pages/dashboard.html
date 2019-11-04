@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../css/global.css" media="all"/>
+</head>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../js/jq.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script type="text/javascript" src="../js/echarts.js"></script>
+
+<style>
+    .layermchild{ -webkit-overflow-scrolling: touch;}
+</style>
+<style>
+    .chartMain {
+        width: 370px;
+        height: 140px;
+        margin: 0 auto;
+    }
+
+    .chart-card {
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+
+    .chart-body {
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+
+    .chart-carousel {
+        margin: 0 auto;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    /*div{border:1px solid #000}*/
+</style>
+<body class="layui-fluid">
+    <div class="layui-show layui-row layui-col-space15" style="border:1px solid #000">
+        <div class="layui-col-md4 layui-col-sm4">
+            <div class="layui-card chart-card layui-row layui-col-space5">
+                <div class="layui-card-body chart-body">
+                    <div class="layui-carousel layadmin-carousel layadmin-dataview chart-carousel"
+                         data-anim="fade" lay-filter="LAY-index-dataview" lay-anim="fade"
+                         lay-indicator="inside" lay-arrow="none">
+                        <div class="chartMain" id="temperatureChartMain"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card chart-card layui-row  layui-col-space5">
+                <div class="layui-card-body chart-body">
+                    <div class="layui-carousel layadmin-carousel layadmin-dataview chart-carousel"
+                         data-anim="fade" lay-filter="LAY-index-dataview" lay-anim="fade"
+                         lay-indicator="inside" lay-arrow="none">
+                        <div class="chartMain" id="humidityChartMain"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card chart-card layui-row layui-col-space5">
+                <div class="layui-card-body chart-body">
+                    <div class="layui-carousel layadmin-carousel layadmin-dataview chart-carousel"
+                         data-anim="fade" lay-filter="LAY-index-dataview" lay-anim="fade"
+                         lay-indicator="inside" lay-arrow="none">
+                        <div class="chartMain" id="pm25ChartMain"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card chart-card layui-row layui-col-space5">
+                <div class="layui-card-body chart-body">
+                    <div class="layui-carousel layadmin-carousel layadmin-dataview chart-carousel"
+                         data-anim="fade" lay-filter="LAY-index-dataview" lay-anim="fade"
+                         lay-indicator="inside" lay-arrow="none">
+                        <div class="chartMain" id="pressureChartMain"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="layui-card layui-row layui-col-space5">
+                <div class="layui-card-header">更多监测>>></div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">农事地图</div>
+                <div class="layui-card-body">
+                    <div class="layui-carousel" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 100%;">
+                        <img style="width: 100%;height: 110%"
+                             src="../img/image.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md2 layui-col-sm2">
+        <div class="layui-card">
+            <div class="layui-card-header">远程控制</div>
+            <div class="layui-card-body layui-text">
+
+                <table class="layui-table" border="0">
+                    <colgroup>
+                        <col width="80">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr style="margin: 0 auto;text-align:center">
+                        <td>
+                            <form class="layui-form" action="" name="temperatureForm">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"><i class="layui-icon layui-icon-set"
+                                                                       style="font-size: 25px; color: #1E9FFF;"></i>&nbsp;灌溉泵</label>
+                                    <input lay-filter="alert_shade_net" type="checkbox" name="alert_shade_net"
+                                           lay-skin="switch" lay-text="开启|关闭" id="alert_shade_net">
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="margin: 0 auto;text-align:center">
+                        <td style="padding-bottom: 0;">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"><i class="layui-icon layui-icon-loading"
+                                                                       style="font-size: 25px; color: #1E9FFF;"></i>&nbsp;遮阳网</label>
+                                    <input lay-filter="alert_twyer" type="checkbox" name="alert_twyer"
+                                           lay-skin="switch" lay-text="开启|关闭" id="alert_twyer">
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="margin: 0 auto;text-align:center">
+                        <td style="padding-bottom: 0;">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"><i class="layui-icon layui-icon-water"
+                                                                       style="font-size: 25px; color: #1E9FFF;"></i>&nbsp;景观灯</label>
+                                    <input lay-filter="alert_irrigation_pump" type="checkbox" name="alert_irrigation_pump"
+                                           lay-skin="switch" lay-text="开启|关闭" id="alert_irrigation_pump">
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="margin: 0 auto;text-align:center">
+                        <td style="padding-bottom: 0;">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"><i class="layui-icon layui-icon-template"
+                                                                       style="font-size: 25px; color: #1E9FFF;"></i>&nbsp;增氧泵</label>
+                                    <input lay-filter="alert_oxygen_pump" type="checkbox" name="alert_oxygen_pump"
+                                           lay-skin="switch" lay-text="开启|关闭" id="alert_oxygen_pump">
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr style="margin: 0 auto;text-align:center">
+                        <td style="padding-bottom: 0;">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <a class="layui-btn layui-btn-radius layui-btn-primary">更多设备...</a>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+<!--监听switch按钮的开关-->
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听遮光网传感器开关
+        form.on('switch(alert_shade_net)', function (data) {
+            var alert_value = this.checked ? '1' : '2';
+
+            $.ajax({
+                type: 'post',
+                url: '/remote_control/switch/shade_net/' + alert_value,
+                beforeSend: function () {
+                    index_wx = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                },
+                error: function (data) {
+                    layer.msg('数据异常，操作失败！');
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code == "1") {
+                        setTimeout(function () {
+                            layer.msg('操作成功');
+                        }, 2000);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                },
+                dataType: 'html'
+            });
+        });
+
+        //监听鼓风机传感器开关
+        form.on('switch(alert_twyer)', function (data) {
+            var alert_value = this.checked ? '1' : '2';
+
+            $.ajax({
+                type: 'post',
+                url: '/remote_control/switch/twyer/' + alert_value,
+                beforeSend: function () {
+                    index_wx = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                },
+                error: function (data) {
+                    layer.msg('数据异常，操作失败！');
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code == "1") {
+                        setTimeout(function () {
+                            layer.msg('操作成功');
+                        }, 2000);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                },
+                dataType: 'html'
+            });
+        });
+
+        //监听灌溉泵传感器开关
+        form.on('switch(alert_irrigation_pump)', function (data) {
+            var alert_value = this.checked ? '1' : '2';
+
+            $.ajax({
+                type: 'post',
+                url: '/remote_control/switch/irrigation_pump/' + alert_value,
+                beforeSend: function () {
+                    index_wx = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                },
+                error: function (data) {
+                    layer.msg('数据异常，操作失败！');
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code == "1") {
+                        setTimeout(function () {
+                            layer.msg('操作成功');
+                        }, 2000);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                },
+                dataType: 'html'
+            });
+        });
+
+        //监听增氧泵传感器开关
+        form.on('switch(alert_oxygen_pump)', function (data) {
+            var alert_value = this.checked ? '1' : '2';
+
+            $.ajax({
+                type: 'post',
+                url: '/remote_control/switch/oxygen_pump/' + alert_value,
+                beforeSend: function () {
+                    index_wx = layer.msg('正在切换中，请稍候', {icon: 16, time: false, shade: 0.8});
+                },
+                error: function (data) {
+                    layer.msg('数据异常，操作失败！');
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    if (data.code == "1") {
+                        setTimeout(function () {
+                            layer.msg('操作成功');
+                        }, 2000);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                },
+                dataType: 'html'
+            });
+        });
+    });
+</script>
+
+<!--温度-->
+<script type="text/javascript">
+    var intvalTime=1500000000;//全局定时任务时间,一般情况下设置为10分钟去后台取一次数据
+
+    var option1 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        title: {
+            text: '温度(℃)' //标题
+        },
+
+        grid: {
+            left: '3%',
+            right: '7%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '湿度',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                data: [12, 13, 40, 43, 59, 63, 71, 82, 83, 90],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var temperatureChart = echarts.init(document.getElementById('temperatureChartMain'));
+    // 使用刚指定的配置项和数据显示图表。
+    temperatureChart.setOption(option1);
+    var url1 = "../temperatures/findAll";
+    var times1 = [];    //时间数组（实际用来盛放X轴坐标值）
+    var temperatures = [];    //温度数组（实际用来盛放Y坐标值）
+
+    var a = function (data, status) {
+        if (data != null) {
+            times1 = [];
+            temperatures = [];
+            for (var i = 0; i < data.length; i++) {
+                times1.push(data[i].timeStr);
+                temperatures.push(data[i].t);
+            }
+            //之前option中legend和 XAxis的data,series 为空，所以现在将数据填充进去
+            temperatureChart.setOption({        //加载数据图表
+                xAxis: {
+                    data: times1
+                },
+                series: [{
+                    type: 'line',
+                    data: temperatures
+                }]
+            });
+        }
+    };
+
+    $.get(url1, null, a, "json");
+
+    //重复执行某个方法
+    window.setInterval("$.get(url1, null,a,'json');", intvalTime);
+
+</script>
+<!--温度-->
+<!--湿度-->
+<script type="text/javascript">
+
+    var option2 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        title: {
+            text: '湿度(%)' //标题
+        },
+
+        grid: {
+            left: '3%',
+            right: '7%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '湿度',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                data: [12, 13, 40, 43, 59, 63, 71, 82, 83, 90],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var humidityChart = echarts.init(document.getElementById('humidityChartMain'));
+    // 使用刚指定的配置项和数据显示图表。
+    humidityChart.setOption(option2);
+    var url2 = "../humiditys/findAll";
+    var times2 = [];    //时间数组（实际用来盛放X轴坐标值）
+    var humiditys = [];    //温度数组（实际用来盛放Y坐标值）
+    var b = function (data, status) {
+        if (data != null) {
+            times2 = [];
+            humiditys = [];
+            for (var i = 0; i < data.length; i++) {
+                times2.push(data[i].timeStr);
+                humiditys.push(data[i].h);
+            }
+            //之前option中legend和 XAxis的data,series 为空，所以现在将数据填充进去
+            humidityChart.setOption({        //加载数据图表
+                xAxis: {
+                    data: times2
+                },
+                series: [{
+                    type: 'line',
+                    data: humiditys
+                }]
+            });
+        }
+    };
+    $.get(url2, null, b, "json");
+
+    //重复执行某个方法
+    window.setInterval("$.get(url2, null,b,'json');", intvalTime);
+</script>
+<!--湿度-->
+
+<!--pm2.5-->
+<script type="text/javascript">
+    var option3 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        title: {
+            text: '光强(lux)' //标题
+        },
+
+        grid: {
+            left: '3%',
+            right: '7%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '光照强度',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                data: [12, 13, 40, 43, 59, 63, 71, 82, 83, 90],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var pm25Chart = echarts.init(document.getElementById('pm25ChartMain'));
+    // 使用刚指定的配置项和数据显示图表。
+    pm25Chart.setOption(option3);
+    var url3 = "../pm25s/findAll";
+    var times3 = [];    //时间数组（实际用来盛放X轴坐标值）
+    var pm25s = [];    //气压数组（实际用来盛放Y坐标值）
+
+    var c=function (data, status) {
+
+        if (data != null) {
+            times3 = [];    //时间数组（实际用来盛放X轴坐标值）
+            pm25s = [];
+            for (var i = 0; i < data.length; i++) {
+                times3.push(data[i].timeStr);
+                pm25s.push(data[i].pm);
+            }
+            //之前option中legend和 XAxis的data,series 为空，所以现在将数据填充进去
+            pm25Chart.setOption({        //加载数据图表
+                xAxis: {
+                    data: times3
+                },
+                series: [{
+                    type: 'line',
+                    data: pm25s
+                }]
+            });
+        }
+        layer.open({
+            title: '折线图',
+            type: 1,
+            shade: false,
+            area: ['300px', '200px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#speedChart")
+        });
+    };
+
+    $.get(url3, null, c, "json");
+
+    //重复执行某个方法
+    window.setInterval("$.get(url3, null,c,'json');", intvalTime);
+</script>
+<!--pm2.5-->
+
+<!--气压-->
+<script type="text/javascript">
+    var option4 = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        title: {
+            text: '气压(百帕)' //标题
+        },
+
+        grid: {
+            left: '3%',
+            right: '7%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+                //formatter: '{value}pa'
+            }
+        },
+        series: [
+            {
+                name: '气压',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                data: [12, 13, 40, 43, 59, 63, 71, 82, 83, 90, 93, 95, 73, 61],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var pressureChart = echarts.init(document.getElementById('pressureChartMain'));
+    // 使用刚指定的配置项和数据显示图表。
+    pressureChart.setOption(option4);
+    var url4 = "../pressures/findAll";
+    var times4 = [];    //时间数组（实际用来盛放X轴坐标值）
+    var pressures = [];    //气压数组（实际用来盛放Y坐标值）
+
+    var d=function (data, status) {
+        if (data != null) {
+            times4 = [];
+            pressures = [];
+            for (var i = 0; i < data.length; i++) {
+                times4.push(data[i].timeStr);
+                pressures.push(data[i].p);
+            }
+            //之前option中legend和 XAxis的data,series 为空，所以现在将数据填充进去
+            pressureChart.setOption({        //加载数据图表
+                xAxis: {
+                    data: times4
+                },
+                series: [{
+                    type: 'line',
+                    data: pressures
+                }]
+            });
+        }
+        layer.open({
+            title: '折线图',
+            type: 1,
+            shade: false,
+            area: ['300px', '200px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $("#speedChart")
+        });
+
+    };
+
+    $.get(url4, null, d, "json");
+
+    //重复执行某个方法
+    window.setInterval("$.get(url4, null,d,'json');", intvalTime);
+</script>
+<!--气压-->
+
+</body>
+
+</html>
+<style>
+    .layui-body {
+        left: 0px
+    }
+
+    .layui-table {
+        border: 0;
+    }
+
+    .layui-table td {
+        border: 0;
+    }
+
+    .layui-card-body {
+        padding-top: 1px
+    }
+
+</style>

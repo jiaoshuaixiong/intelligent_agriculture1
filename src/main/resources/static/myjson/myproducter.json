@@ -1,0 +1,172 @@
+{
+	"myjson": {
+		"mybanner": [
+			{
+				"name": "../../img/producter/banner01.png"
+			}, {
+				"name": "../../img/producter/banner01.png"
+			}, {
+				"name": "../../img/producter/banner01.png"
+			}
+		],
+		"myinfo": [
+			{
+				"name": "作物名称",
+				"details": "有机大米"
+			}, {
+				"name": "产品批次",
+				"details": "2019早稻"
+			}, {
+				"name": "种植面积",
+				"details": "120亩"
+			}, {
+				"name": "采收时间",
+				"details": "201年6月"
+			}, {
+				"name": "作物产地",
+				"details": "湖南衡阳"
+			}, {
+				"name": "产品特色",
+				"details": "为了保证大米的口感为了保证大米的口感为了保证大米的口感为了保证大米的口感为了保证大米的口感为了保证大米的口感为了保证大米的口感为了保证大米的口感"
+			}
+		],
+		"myvideo": [],
+		"myenvironmental": [
+			{
+				"data": "19.7",
+				"name": "空气温度{°c}"
+			}, {
+				"data": "56.1",
+				"name": "空气湿度{%}"
+			}, {
+				"data": "25.1",
+				"name": "土壤温度{°c}"
+			}, {
+				"data": "51.1",
+				"name": "土壤湿度{%}"
+			}, {
+				"data": "7.7",
+				"name": "土壤PH值{%}"
+			}, {
+				"data": "120.7",
+				"name": "土壤EC值{电导率}"
+			}, {
+				"data": "4567.7",
+				"name": "光照强度{lux}"
+			}
+		],
+		"myrecordtotal": "8",
+		"myrecord": [
+			{
+				"step": "1",
+				"process": "包装",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "2",
+				"process": "碾米",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对稻谷进行碾压，生成出优质的大米"
+			}, {
+				"step": "3",
+				"process": "晾晒",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":""
+			}, {
+				"step": "4",
+				"process": "收割",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "5",
+				"process": "施肥",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "6",
+				"process": "除虫",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "7",
+				"process": "浇水",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "8",
+				"process": "移摘",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}, {
+				"step": "8",
+				"process": "育秧",
+				"time": "2010-02-28",
+				"name": "李明",
+				"imgs": [
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png",
+					"../../img/avatars/1.png",
+					"../../img/avatars/sunny.png"
+				],
+				"details":"对大米精品进行包装，并贴上标签"
+			}
+		],
+		"myqualifications":["../../img/producter/qualifications/myqualifications01.png","../../img/producter/qualifications/myqualifications01.png"]
+	}
+}

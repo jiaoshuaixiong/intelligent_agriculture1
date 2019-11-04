@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<title></title>
+		<link rel="stylesheet" href="css/mobile_globa.css" />
+		<link rel="stylesheet" href="css/mobile_login.css" />
+		<script src="js/rem.js"></script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="header clearfix">
+				<a href="javascript:" class="left back"><img class="icon-left" src="./img/public/header-left.png"/>智慧农业</a>
+				<a href="#" class="right"><img class="icon-iconmore" src="./img/public/iconmore.png"/></a>
+			</div>
+			<div class="userinfo">
+				<img class="userimg" src="img/public/user.png" alt="" />
+				<p class="name">张明</p>
+				<p class="company">智慧农业</p>
+			</div>
+			<div class="tasklist">
+				<ul>
+					<li>
+						<a href="./tasklist/task_list_working.html">
+							<img class="abs-status" src="img/public/plus.png"/>待完成的农事任务<span class="number text-red">(1)</span>
+						</a>
+					</li>
+					<li>
+						<a href="./tasklist/task_list_completed.html">
+							<img class="abs-status" src="img/public/choose.png"/>已完成的农事任务<span class="number">(24)</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="userout">
+				<div class="out">退出登录</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mobile_globa.js"></script>
+	<script>
+		$(function($){
+            var url = window.location.href;
+            alert(url);
+		})
+	</script>
+</html>

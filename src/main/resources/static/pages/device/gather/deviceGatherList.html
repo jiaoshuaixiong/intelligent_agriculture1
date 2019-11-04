@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../../layui/css/layui.css" media="all" />
+</head>
+<body ng-app="ia" ng-controller="deviceGatherController" ng-init="getDeviceList()">
+    <div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div>
+                <header style="height: 100%">
+                    <div align="left">
+	                    <table style="width: 100%">
+	                   		<tr>
+	                   			<td>
+		                   			<form id="form" class="form-inline" onsubmit="return false" action="/deviceGathers/load">
+										<div class="form-group">
+											<input  name="deviceId" id="deviceId" type="hidden" class="form-control" placeholder="请输入设备名称">
+                                            <select ng-change="changeDeviceName(deviceId)" ng-model="deviceId" ng-options="device.id as device.name for device in deviceList" lay-verify="required" class='form-control input-sm' data-bv-notempty='true'>
+                                                <option value="">请选择一个设备</option>
+                                            </select>
+
+                                            <input class='form-control' placeholder='请选择时间范围' type='text' name='createTimeRange' id='createTimeRange'>
+											<button id="searchBt" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe615;</i>搜索</button>
+											<button id="loadBt" permission="excel:down" class="layui-btn layui-btn-sm"><i class="layui-icon">&#xe615;</i>下载</button>
+										</div>
+									</form>
+	                   			</td>
+	                   			<td align="right">
+	                   				<button class="layui-btn layui-btn-sm" onclick="location.href='addDeviceGather.html'">
+                                      <i class="layui-icon">&#xe608;</i> 添加设备
+                                    </button>
+                                    <button class="layui-btn layui-btn-sm" onclick="location.href='/deviceGathers/load'">
+                                        <i class="layui-icon">&#xe608;</i> 数据导出
+                                    </button>
+	                   			</td>
+	                   		</tr> 
+	                    </table>
+					</div>
+                </header>
+                
+                <div>
+                    <div class="widget-body no-padding">
+                        <table id="dt-table" class="table table-striped table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                </tr>                       
+                                <tr>
+									<th>采集数据ID</th>
+								<!--	<th>采集设备ID</th>-->
+									<!--<th>设备唯一序列号</th>-->
+									<th>设备名称</th>
+									<!--<th>传感器类型</th>-->
+									<th>采集的数据</th>
+									<!--<th>计量单位ID</th>-->
+									<th>计量单位</th>
+									<th>单位类型</th>
+									<th>采集时间</th>
+								<!--	<th>createTime</th>
+									<th>updateTime</th>-->
+									<th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="../../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../../js/jq.js"></script>
+<script type="text/javascript" src="../../../js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../../layui/layui.js"></script>
+<script type="text/javascript" src="../../../js/my/permission.js"></script>
+<script src="../../../js/angularjs/angular.min.js"></script>
+
+
+<script  type="text/javascript">
+    var app=angular.module('ia',[]);
+    app.controller('deviceGatherController',function ($scope,$http) {
+        //获取设备类型列表,获取用户列表,获取农场列表
+        $scope.getDeviceList=function () {
+            $http.get('/devices').then(function (response) {
+                $scope.deviceList=response.data.data;
+            });
+        }
+        $scope.changeDeviceName=function (deviceId) {
+            window.document.getElementById("deviceId").value=$scope.deviceId;
+        }
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+var pers = checkPermission();
+
+var example;
+function init(){
+	example = 
+    	$('#dt-table').DataTable({
+        	"searching": false,
+        	"processing": false,
+        	"serverSide" : true,
+        	"language": {
+                "url": "/js/plugin/datatables/Chinese.lang"
+            },
+        	"ajax": {
+        		"url" : "/deviceGathers",
+        		"type":"get",
+        		"data":function(d){
+    				d.deviceId = $("#deviceId").val();
+                    d.createTimeRange = $("#createTimeRange").val();
+    			}
+        	},
+        	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
+            "columns": [
+				{"data" : "id", "defaultContent" : ""},
+				/*{"data" : "deviceId", "defaultContent" : ""},*/
+				/*{"data" : "deviceSn", "defaultContent" : ""},*/
+				{"data" : "deviceName", "defaultContent" : ""},
+				/*{"data" : "deviceType", "defaultContent" : ""},*/
+				{"data" : "basicData", "defaultContent" : ""},
+			/*	{"data" : "measurementUnitId", "defaultContent" : ""},*/
+				{"data" : "measurementUnitName", "defaultContent" : ""},
+				{"data" : "measureUnitType", "defaultContent" : ""},
+				{"data" : "gatherTime", "defaultContent" : ""},
+			/*	{"data" : "createTime", "defaultContent" : ""},
+				{"data" : "updateTime", "defaultContent" : ""},*/
+				{ 
+								"data": "", 
+								"defaultContent": "",
+								"orderable":false,
+						        "render": function (data, type, row) {
+                		           var id = row['id'];
+                		           var href = "updateDeviceGather.html?id=" + id;
+                                   var edit = buttonEdit(href, "", pers);
+                		           var del = buttonDel(id, "", pers);
+                                   return edit + del;
+                  	            }		
+							},
+                
+            ],
+           "order": [[ 0, "asc" ]]
+        } );
+}
+
+layui.use(['layer', 'laydate'], function () {
+    var layer = layui.layer;
+    var laydate = layui.laydate;
+    laydate.render({
+        elem: '#createTimeRange',
+        type:'date',
+        range:true,//开启左右面板,可以进行日期范围的选择，很好用
+        //trigger:'mouseover',//定义鼠标悬停时弹出控件
+        theme:'#393D49',//主题颜色
+        calendar:true//是否显示公历节日
+    });
+});
+
+function del(id){
+	layer.confirm('确定要删除吗？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+    	$.ajax({
+            type : 'delete',
+            url : '/deviceGathers/'+id,
+            success : function(data) {
+                example.ajax.reload();
+                layer.msg("删除成功");
+            }
+        });
+        
+        layer.close(1);
+    });
+}
+
+$("#searchBt").click(function(){
+	example.ajax.reload();
+});
+$("#loadBt").click(function(){
+    deviceId=$("#deviceId").val(),
+    deviceName=$("#deviceName").val(),
+    createTimeRange=$("#createTimeRange").val()
+    $("#form").attr("onsubmit", "return true");
+    $("#form").submit();
+    $("#form").attr("onsubmit", "return false");
+});
+
+init();
+</script>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../layui/css/layui.css" media="all"/>
+</head>
+<body ng-app="ia" ng-controller="addDeviceController" ng-init="getDeviceTypeList()">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备序列号</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备序列号' type='text' name='sn' id='sn' ng-model="device.sn" data-bv-notempty='true' data-bv-notempty-message='sn 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备名称</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备名称' type='text' name='name' id='name' ng-model="device.name"  data-bv-notempty='true' data-bv-notempty-message='name 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备类型</label>
+				<div class='col-md-10'>
+                    <select name="typeId" ng-model="device.typeId" ng-options="deviceType.id as deviceType.name for deviceType in deviceTypeList" lay-verify="required" class='form-control input-sm' data-bv-notempty='true'>
+                        <option value="">请选择一个设备类型</option>
+                    </select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>农场位置</label>
+				<div class='col-md-10'>
+                    <select name="farmId" ng-model="device.farmId" ng-options="farm.id as farm.name for farm in farmList" class='form-control input-sm'>
+                        <option value="">请选择您的农场</option>
+                    </select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备位置</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备位置' type='text' ng-model="device.location"  name='location' id='location' data-bv-notempty='true' data-bv-notempty-message='location 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备照片</label>
+				<div class='col-md-5'>
+					<input class='form-control' placeholder='请上传设备照片' type='text' ng-model="device.image"  name='image' id='image' data-bv-notempty='true' data-bv-notempty-message='image 不能为空'>
+				</div>
+                <button type="button" class="layui-btn" id="uploadBtn">
+                    <i class="layui-icon">&#xe67c;</i>上传文件
+                </button>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>安装时间</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入安装时间' type='date' ng-model="device.installTime"  name='installTime' id='installTime' data-bv-notempty='true' data-bv-notempty-message='installTime 不能为空' readonly>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备状态</label>
+				<div class='col-md-10'>
+                    <select name="state" lay-verify="required"  ng-model="device.state"  class='form-control input-sm' data-bv-notempty='true'  data-bv-notempty-message='状态不能为空'>
+                        <option value="">请选择设备的状态</option>
+                        <option value="0">在线</option>
+                        <option value="1">离线</option>
+                    </select>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>规格</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入规格'  ng-model="device.standard"  type='text' name='standard' id='standard' data-bv-notempty='true' data-bv-notempty-message='standard 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>生产厂家</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入生产厂家' type='text'  ng-model="device.manufacturer"  name='manufacturer' id='manufacturer' data-bv-notempty='true' data-bv-notempty-message='manufacturer 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>拥有者</label>
+				<div class='col-md-10'>
+                    <select name="userId" lay-verify="required" ng-model="device.userId" ng-options="user.id as user.username for user in userList" class='form-control input-sm' data-bv-notempty='true'  data-bv-notempty-message='用户不能为空'>
+                        <option value="">请选择您的主人</option>
+                    </select>
+				</div>
+			</div>
+
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>软件版本</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入软件版本' type='text'  ng-model="device.softwareVersion"  name='softwareVersion' id='softwareVersion' data-bv-notempty='true' data-bv-notempty-message='softwareVersion 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>最小阈值</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入最小阈值' type='text'   ng-model="device.thresholdMin"  name='thresholdMin' id='thresholdMin' data-bv-notempty='true' data-bv-notempty-message='thresholdMin 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>最大阈值</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入最大阈值' type='text'  ng-model="device.thresholdMax"  name='thresholdMax' id='thresholdMax' data-bv-notempty='true' data-bv-notempty-message='thresholdMax 不能为空'>
+				</div>
+			</div>
+
+            <div class='form-group'>
+                <label class='col-md-2 control-label'>备注</label>
+                <div class='col-md-10'>
+                    <textarea class='form-control' rows="10" placeholder='请输入备注' type='text'  ng-model="device.remark"  name='remark' id='remark'></textarea>
+                </div>
+            </div>
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="javascript:history.back(-1)">返回</button>
+						<button class="btn btn-primary" type="submit" ng-click="add()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+    <script src="../../js/angularjs/angular.min.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate','upload'], function(){
+		    var layer = layui.layer;
+            var laydate = layui.laydate;
+            var upload = layui.upload;
+
+            //日期选择
+            laydate.render({
+                elem: '#installTime',
+                type: 'date',
+                //range:true,//开启左右面板,可以进行日期范围的选择
+               // trigger: 'mouseover',//定义鼠标悬停时弹出控件
+                theme: '#393D49',//主题颜色
+                calendar: true//是否显示公历节日
+            });
+
+            //设备图片上传
+            upload.render({
+                elem: '#uploadBtn' //绑定元素
+                ,accept: 'file' //允许上传的文件类型
+                ,url: '/files' //上传接口
+                ,done: function(res, index, upload){
+                    layer.msg("上传成功");
+                }
+            });
+
+		});
+
+	</script>
+    <script  type="text/javascript">
+        var app=angular.module('ia',[]);
+        app.controller('addDeviceController',function ($scope,$http) {
+
+            //获取设备类型列表,获取用户列表,获取农场列表
+            $scope.getDeviceTypeList=function () {
+                $http.get('/deviceTypes/all').then(function (response) {
+                    $scope.deviceTypeList=response.data.deviceTypeList;
+                    $scope.farmList=response.data.farmList;
+                    $scope.userList=response.data.userList;
+                });
+            }
+
+            $scope.device={installTime:''}
+            $scope.add=function () {
+                var formdata = $("#form").serializeObject();
+                //处理一下日期字符串,不然后台无法封装
+                $scope.device.installTime=new Date(formdata.installTime).getTime();
+                $http.post('/devices',$scope.device).then(function (response) {
+                    location.href = "deviceList.html";
+                })
+            }
+        });
+    </script>
+</body>
+</html>

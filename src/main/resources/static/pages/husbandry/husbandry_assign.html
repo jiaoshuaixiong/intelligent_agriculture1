@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+	    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" />
+	    <link rel="stylesheet" href="../../css/global.css">
+	    <link rel="stylesheet" href="../../css/mytable.css">
+	    <link rel="stylesheet" href="" id='bugcss'>
+		<script type="text/javascript">
+			document.querySelector('#bugcss').href = '../../layuiadmin/style/bug.css?v=1.0&code=' + new Date();
+		</script>
+	</head>
+	<body>
+		<div class="warp">
+			<div class="layui-container form-main">
+				<div class="layui-row main-title">
+					指派农事任务
+				</div>
+				<div class="layui-row main-form">
+					<form class="layui-form" action="" lay-filter="test1" id="form">
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">产品批次</label>
+							<div class="layui-input-block">
+								<select id="productBatch" name="productBatch" lay-filter="batch" lay-verify="required">
+									<option value="">请选择产品批次</option>
+									<option value="0">2019年早稻</option>
+									<option value="1">2018年早稻</option>
+									<option value="2">2017年早稻</option>
+									<option value="3">2015年早稻</option>
+									<option value="4">2016年早稻</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">农事任务</label>
+							<div class="layui-input-block">
+								<select id="ttask" name="ttask" lay-verify="required">
+									<option value="">请选择农事任务</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">生产人员</label>
+							<div class="layui-input-block">
+								<select id="productor" name="productor" lay-verify="required">
+									<option value="">请选择生产人员</option>
+									<option value="0">李明</option>
+									<option value="1">张明</option>
+									<option value="2">刘明</option>
+									<option value="3">赵明</option>
+									<option value="4">胡焱</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">完成时间</label>
+							<input type="text" placeholder="yyyy-MM-dd" name="finish_date" class="layui-input" id="test" lay-verify="required" style="width: 200px">
+						</div>
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label layui-hide-xs">任务要求</label>
+							<div class="layui-input-block">
+								<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" lay-submit lay-filter="formDemo">确认</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" onclick="javascript:history.back(-1)">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/layer.js"></script>
+<script type="text/javascript" src="../../js/mytable.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript">
+	$(function() {
+        layui.use(['layer','form'], function(){
+            var layer = layui.layer;
+            var form = layui.form;
+            $.ajax({
+                type : 'get',
+                url : '/productBatchess/productBatchListByActive',
+                contentType: "application/json; charset=utf-8",
+                data : {},
+                success : function(data) {
+                    $('#productBatch').html('');
+                    var htmlStr = "<option value=\"\">请选择产品批次</option>";
+                    for (var i = 0;i<data.length;i++) {
+                        htmlStr +="<option value='"+data[i].id+"'>"+data[i].product_batch+"</option>";
+                    }
+                    $('#productBatch').html(htmlStr);
+                    form.render('select','test1');
+                }
+            });
+
+            form.on('select(batch)', function(data){
+                $.ajax({
+                    type : 'get',
+                    url : '/tTasks/productBatchList/'+data.value,
+                    contentType: "application/json; charset=utf-8",
+                    data : {
+
+                    },
+                    success : function(data) {
+                        if(data == undefined || data == null || data.length == 0) {
+
+						} else {
+                            $('#ttask').html('');
+                            var htmlStr = "<option value=\"\">请选择农事任务</option>";
+                            for (var i = 0;i<data.length;i++) {
+                                htmlStr +="<option value='"+ data[i].id+"'>"+data[i].content+"</option>";
+                            }
+                            $('#ttask').html(htmlStr);
+						}
+                        form.render('select','test1');
+                    }
+                });
+            });
+
+            form.on('submit(formDemo)', function(data){
+                var formdata = $("#form").serializeObject();
+                $.ajax({
+                    type : 'post',
+                    url : '/tTasks/pull',
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(formdata),
+                    success : function(data) {
+                        layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                            location.href = "husbandry_list.html";
+                        });
+                    }
+                });
+                return false;
+            });
+
+            $.ajax({
+                type : 'get',
+                url : '/tProducters/getProducterList',
+                contentType: "application/json; charset=utf-8",
+                data : {},
+                success : function(data) {
+                    $('#productor').html('');
+                    var htmlStr = "<option value=\"\">请选择生产人员</option>";
+                    for (var i = 0;i<data.length;i++) {
+                        htmlStr +="<option value='"+data[i].id+"'>"+data[i].username+"</option>";
+                    }
+                    $('#productor').html(htmlStr);
+                    form.render('select','test1');
+                }
+            });
+		});
+    });
+</script>
+<script type="text/javascript">
+	$(function(){
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+	
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#test', //指定元素
+				format: 'yyyy-MM-dd'
+			});
+		});
+	})
+</script>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<input type="hidden" id="id" name="id">
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备id编号</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备id编号' type='text' name='sn' id='sn' data-bv-notempty='true' data-bv-notempty-message='sn 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备昵称</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备昵称' type='text' name='name' id='name' data-bv-notempty='true' data-bv-notempty-message='name 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备类型</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备类型' type='text' name='typeId' id='typeId' data-bv-notempty='true' data-bv-notempty-message='typeId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备位置</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备位置' type='text' name='location' id='location' data-bv-notempty='true' data-bv-notempty-message='location 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备图片</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请上传设备图片' type='text' name='image' id='image' data-bv-notempty='true' data-bv-notempty-message='image 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>安装时间</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入安装时间' type='text' name='installTime' id='installTime' data-bv-notempty='true' data-bv-notempty-message='installTime 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备状态：0 在线 1 离线</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备状态' type='text' name='state' id='state' data-bv-notempty='true' data-bv-notempty-message='state 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备规格</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备规格' type='text' name='standard' id='standard' data-bv-notempty='true' data-bv-notempty-message='standard 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>生产厂家</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入生产厂家' type='text' name='manufacturer' id='manufacturer' data-bv-notempty='true' data-bv-notempty-message='manufacturer 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>拥有者</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入拥有者' type='text' name='userId' id='userId' data-bv-notempty='true' data-bv-notempty-message='userId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备备注</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备备注' type='text' name='remark' id='remark' data-bv-notempty='true' data-bv-notempty-message='remark 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备软件版本号</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='设置设备软件版本号' type='text' name='softwareVersion' id='softwareVersion' data-bv-notempty='true' data-bv-notempty-message='softwareVersion 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备阈值的最小值</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备阈值的最小值' type='text' name='thresholdMin' id='thresholdMin' data-bv-notempty='true' data-bv-notempty-message='thresholdMin 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备阈值的最大值</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备阈值的最大值' type='text' name='thresholdMax' id='thresholdMax' data-bv-notempty='true' data-bv-notempty-message='thresholdMax 不能为空'>
+				</div>
+			</div>
+
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="javascript:history.back(-1)">返回</button>
+						<button class="btn btn-primary" type="submit" onclick="update()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate'], function(){
+		    var layer = layui.layer;
+		});
+		
+		initData();
+		
+		function initData(){
+			var id = getUrlParam("id");
+			if(id != ""){
+				$.ajax({
+					type : 'get',
+					url : '/devices/'+id,
+					async : false,
+					success : function(data) {
+						$('#id').val(data.id);
+						$('#sn').val(data.sn);
+						$('#name').val(data.name);
+						$('#typeId').val(data.typeId);
+						$('#farmId').val(data.farmId);
+						$('#location').val(data.location);
+						$('#image').val(data.image);
+						$('#installTime').val(data.installTime);
+						$('#state').val(data.state);
+						$('#standard').val(data.standard);
+						$('#manufacturer').val(data.manufacturer);
+						$('#userId').val(data.userId);
+						$('#remark').val(data.remark);
+						$('#softwareVersion').val(data.softwareVersion);
+						$('#thresholdMin').val(data.thresholdMin);
+						$('#thresholdMax').val(data.thresholdMax);
+
+					}
+				});
+			}
+		}
+
+		function update() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+			   return;
+		    }
+		    
+		    var formdata = $("#form").serializeObject();
+            //处理一下日期字符串,不然后台无法封装
+            formdata.installTime=new Date(formdata.installTime).getTime();
+
+			$.ajax({
+				type : 'put',
+				url : '/devices',
+				contentType: "application/json; charset=utf-8",  
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("修改成功", {shift: -1, time: 1000}, function(){
+                        location.href = "deviceList.html";
+                    });
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>

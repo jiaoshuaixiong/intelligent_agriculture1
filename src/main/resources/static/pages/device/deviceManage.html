@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>设备管理-卡片式</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/layui/font/font_2wmcsfamra2/iconfont.css">
+
+    <link href="../../css/mui.min.css" rel="stylesheet">
+    <script src="../../js/mui.min.js"></script>
+
+</head>
+<body ng-app="ia" ng-controller="deviceManageController" ng-init="devicesState()">
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-row layui-col-space10">
+
+                        <div class="layui-col-xs12 layui-col-sm6">
+                            <div class="layuiadmin-card-text">
+                                <div class="layui-text-top">环境监测设备
+                                    <span class="layuiadmin-span-color">设备总数：<a href="deviceList.html">{{deviceCount}}台</a>
+                                        <a onclick="location.href='addDevice.html'" ><i  style="font-size: 25px; color: #1E9FFF;" class="layui-icon">&#xe654;</i></a>
+                                    </span>
+                                </div>
+                                <div class="layuiadmin-card-text layui-col-space12" style="text-align: center;border-top: 1px solid #dddddd;background-color: white">
+                                    <div class="layui-row layui-col-space12">
+                                        <div class="layui-col-md5 layui-col-xs5 layui-col-space12">
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md6 layui-col-space12"><i style="font-size: 25px; color: #1E9FFF;" class="layui-icon layui-icon-engine"></i></div>
+                                                <div class="layui-col-md6 layui-col-space12">在线</div>
+                                            </div>
+                                            <br><br>
+                                            <div class="layui-row layui-col-space12">
+                                                <a href="deviceRestart.html" class="layui-col-md12 layui-col-space12">{{deviceOnlineCount}}台</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-col-md2 layui-col-xs2 layui-col-space12"><div style="border-right: 1px solid #dddddd;height:100px;"></div></i></div>
+
+                                        <div class="layui-col-md5 layui-col-xs5 layui-col-space12" style="float: right">
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md6 layui-col-space12 "><i  style="font-size: 25px; color: #1E9FFF;" class="layui-icon  layui-icon-engine"></i></div>
+                                                <div class="layui-col-md6 layui-col-space12">离线</div>
+                                            </div>
+                                            <br><br>
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md12 layui-col-space12">{{deviceOfflineCount}}台</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-col-xs12 layui-col-sm6">
+                            <div class="layuiadmin-card-text">
+                                <div class="layui-text-top">视频监测设备
+                                    <span class="layuiadmin-span-color">设备总数：<a href="vedio/vedioList.html">{{vedioCount}}台</a>
+                                        <a onclick="location.href='addDevice.html'" ><i  style="font-size: 25px; color: #1E9FFF;" class="layui-icon">&#xe654;</i></a>
+                                    </span>
+                                </div>
+                                <div class="layuiadmin-card-text layui-col-space12" style="text-align: center;border-top: 1px solid #dddddd;background-color: white">
+                                    <div class="layui-row layui-col-space12">
+                                        <div class="layui-col-md5 layui-col-xs5 layui-col-space12">
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md6 layui-col-space12"><i style="font-size: 25px; color: #1E9FFF;" class="layui-icon layui-icon-video"></i></div>
+                                                <div class="layui-col-md6 layui-col-space12">在线</div>
+                                            </div>
+                                            <br><br>
+                                            <div class="layui-row layui-col-space12">
+                                                <a href="deviceRestart.html" class="layui-col-md12 layui-col-space12">{{vedioOnlineCount}}台</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-col-md2 layui-col-xs2 layui-col-space12"><div style="border-right: 1px solid #dddddd;height:100px;"></div></i></div>
+
+                                        <div class="layui-col-md5 layui-col-xs5 layui-col-space12" style="float: right">
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md6 layui-col-space12 "><i  style="font-size: 25px; color: #1E9FFF;" class="layui-icon  layui-icon-video"></i></div>
+                                                <div class="layui-col-md6 layui-col-space12">离线</div>
+                                            </div>
+                                            <br><br>
+                                            <div class="layui-row layui-col-space12">
+                                                <div class="layui-col-md12 layui-col-space12">{{vedioOfflineCount}}台</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="../../js/angularjs/angular.min.js"></script>
+<script>
+    var app=angular.module('ia',[]);
+    app.controller('deviceManageController',function ($scope,$http) {
+        $scope.devicesState=function () {
+            //得到当前用户对应的农场的设备的状态,包括环境和视频监测设备
+            $http.get('../../devices/devicesState').then(function (response) {
+                $scope.deviceList=response.data.deviceList;
+                $scope.deviceCount=$scope.deviceList.length;
+                $scope.deviceOnlineCount=0;
+                $scope.deviceOfflineCount=0;
+                //状态：0 在线    1 离线
+                angular.forEach($scope.deviceList, function(device){
+                    if (device.state === '0') {
+                        $scope.deviceOnlineCount++
+                    } else {
+                        $scope.deviceOfflineCount++
+                    }
+                });
+
+                $scope.vedioList=response.data.vedioList;
+                $scope.vedioCount=$scope.vedioList.length;
+                $scope.vedioOnlineCount=0;
+                $scope.vedioOfflineCount=0;
+                //状态：0 在线    1 离线
+                angular.forEach($scope.vedioList, function(vedio){
+                    if (vedio.state === 0) {
+                        $scope.vedioOnlineCount++
+                    } else {
+                        $scope.vedioOfflineCount++
+                    }
+                });
+            })
+        }
+    })
+
+</script>
+
+</body>
+</html>

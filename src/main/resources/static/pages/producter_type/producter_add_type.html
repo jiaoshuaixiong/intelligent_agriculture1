@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+	    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" />
+	    <link rel="stylesheet" href="../../css/global.css">
+	    <link rel="stylesheet" href="../../css/mytable.css">
+	</head>
+	<body>
+		<div class="warp">
+			<div class="layui-container form-main">
+				<div class="layui-row main-title">
+					添加生产类型
+				</div>
+				<div class="layui-row main-form">
+					<form class="layui-form"  onsubmit="return false" id="form">
+						<!--<div class="layui-form-item must">
+						    <label class="layui-form-label layui-hide-xs">编号</label>
+						    <div class="layui-input-block">
+						     	<input type="text" name="title" required  lay-verify="required" placeholder="请输入生产人员类型编号" autocomplete="off" class="layui-input">
+						    </div>
+						</div>-->
+						<div class="layui-form-item must">
+						    <label class="layui-form-label layui-hide-xs">生产人员类型</label>
+						    <div class="layui-input-block">
+						     	<input type="text" name="typeName" id="typeName" required  lay-verify="required" placeholder="请输入生产人员类型" autocomplete="off" class="layui-input">
+						    </div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" id="formDemo">确认</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" onclick="javascript:history.back(-1)">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/layer.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript" src="../../js/mytable.js"></script>
+<script type="text/javascript">
+	$(function() {
+	    //生产人员类型
+        $('#formDemo').on('click',function () {
+            var atr = {};
+            atr.typeName = $('#typeName').val();
+            var datas = JSON.stringify(atr);
+            $.ajax({
+                type : 'post',
+                url : '/tProducterTypes',
+                contentType: "application/json; charset=utf-8",
+                data : datas,
+                success : function(data) {
+                    layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                        location.href = "productertype_list.html";
+                    });
+                }
+            });
+        });
+	})
+</script>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwulian.dao.WxPlatformDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.ID != null and params.ID != ''">
+				and ID = #{params.ID} 
+			</if>
+			<if test="params.FARM_ID != null and params.FARM_ID != ''">
+				and FARM_ID = #{params.FARMID} 
+			</if>
+			<if test="params.ISACTIVE != null and params.ISACTIVE != ''">
+				and ISACTIVE = #{params.ISACTIVE} 
+			</if>
+			<if test="params.APPID != null and params.APPID != ''">
+				and APPID = #{params.APPID} 
+			</if>
+			<if test="params.APPSECRET != null and params.APPSECRET != ''">
+				and APPSECRET = #{params.APPSECRET} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from wx_platform t
+		<include refid="where" />
+	</select>
+
+	<select id="list" resultType="WxPlatform">
+		select * from wx_platform t
+        <if test="params != null">
+            <include refid="where" />
+            ${params.orderBy}
+        </if>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+	</select>
+
+	<update id="update">
+		update wx_platform t
+		<set>
+			<if test="ID != null">
+				ID = #{ID}, 
+			</if>
+			<if test="FARM_ID != null">
+				FARM_ID = #{FARMID}, 
+			</if>
+			<if test="ISACTIVE != null">
+				ISACTIVE = #{ISACTIVE}, 
+			</if>
+			<if test="APPID != null">
+				APPID = #{APPID}, 
+			</if>
+			<if test="APPSECRET != null">
+				APPSECRET = #{APPSECRET}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

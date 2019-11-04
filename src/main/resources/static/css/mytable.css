@@ -1,0 +1,155 @@
+body{
+	background: #f2f2f2;
+}
+/*.warp-table{
+	overflow: hidden;
+}
+.warp *{
+	box-sizing: border-box;
+}*/
+/*form-main是父级*/
+.form-main .main-handle{
+	margin: 20px 0 15px;
+}
+.form-main .main-handle button{
+	/*font-size: 12px!important;*/
+}
+.form-main .main-title{
+	background: #f8f8f8;
+	/*font-size: 14px;*/
+	font-weight: bold;
+	line-height: 20px;
+	height: 20px;
+	padding: 20px;
+	border:1px solid #e2e2e2;
+	border-bottom: 0;
+}
+/*main-table是表格的*/
+.form-main .main-table,.form-main .main-form{
+	background: white;
+	padding: 20px;
+	border: 1px solid #e2e2e2;
+}
+.form-main .main-table .layui-table{
+	margin-top: 0;
+}
+.form-main .main-table td,.form-main .main-table th{
+	border: 1px solid #797979;
+	text-align-last: center;
+}
+.form-main .main-table th{
+	font-weight: bold;
+}
+.form-main .operation .box{
+	display: flex;
+	justify-content: center;
+}
+.form-main .operation .box .link{
+	white-space : nowrap;
+}
+.form-main .link{
+	margin: 0 5px;
+	text-decoration: underline;
+	cursor: pointer;
+	float: left;
+}
+.form-main .main-operation{
+	margin-top: 20px;
+}
+.form-main .main-information{
+	padding: 20px;
+	background: white;
+	border-left: 1px solid #e2e2e2;
+	border-right: 1px solid #e2e2e2;
+	border-top: 1px solid #e2e2e2;
+}
+.form-main .main-information .tit{
+	margin-bottom: 10px;
+}
+.form-main .main-information .imgs{
+	display: flex;
+	justify-content: flex-start;
+}
+.form-main .main-information .imgs img{
+	display: block;
+	width: auto;
+	height: 70px;
+	margin-right: 5px;
+}
+.qrcode{
+	text-align: center;
+}
+.qrcode img{
+	display: block;
+	width: 100%;
+	height: auto;
+	margin: 0 auto;
+}
+/*main-form是表单的*/
+.main-form .must{
+	position: relative;
+}
+.main-form .must::after{
+	position: absolute;
+	content: '*';
+	right: -10px;
+	color: red;
+	top: 14px;
+}
+.main-form .abs-addproto{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100px;
+}
+.main-form .abs-input{
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.main-form .file-box{
+	border: 1px solid #e6e6e6;
+	height: 100%;
+	min-height: 38px;
+	box-sizing: border-box;
+	margin-right: 200px;
+	/*display: flex;*/
+
+}
+.main-form .file-box .myappendimg{
+	width: 100px;
+	height: 100px;
+	margin: 10px;
+}
+.main-form .hidden{
+	visibility: hidden;
+}
+.main-form .layui-input-block{
+	position: relative;
+}
+.main-form .abs-close{
+	font-size: 18px;
+	position: absolute;
+	top: 9px;
+	right: 6px;
+	cursor: pointer;
+}
+.main-table .photo .imgDefault{
+	display: flex;
+	justify-content: center;
+}
+.imgDefault img{
+	margin: 0 5px;
+}
+
+/*移动端*/
+@media screen and (max-width: 768px){
+	.layui-input-block{
+		margin-left:0!important;
+	}
+}
+@media screen and (max-width: 768px) {
+	.layui-input-block {
+
+	}
+}

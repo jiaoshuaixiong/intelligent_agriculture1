@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+		<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+		<link rel="stylesheet" href="../../css/global.css">
+		<link rel="stylesheet" href="../../css/husbandry.css">
+		<link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" />
+		<link rel="stylesheet" href="" id='bugcss'>
+		<script type="text/javascript">
+			document.querySelector('#bugcss').href = '../../layuiadmin/style/bug.css?v=1.0&code=' + new Date();
+		</script>
+	</head>
+
+	<body>
+		<div class="main-table-box">
+			<div class="table-main">
+				<div class="table-title">
+					添加产品批次
+				</div>
+				<div class="main addhusbandry-inputs">
+					<form class="layui-form" action="">
+						<div class="layui-form-item must">
+							<label class="layui-form-label">作物名称</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" required lay-verify="required" placeholder="请输入作物名称" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label">产品批次</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" required lay-verify="required" placeholder="请输入产品批次" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label">种植面积</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" required lay-verify="required" placeholder="请输入种植面积" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label">采集时间</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" required lay-verify="required" placeholder="请输入种植面积" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label">产品图片</label>
+							<div class="layui-input-block">
+								<input type="text" name="title" style="width: 350px;" required lay-verify="required" placeholder="请输入种植面积" autocomplete="off" class="layui-input">
+							</div>
+							<span class="layui-btn abs-busbandrybtn"><i class="layui-icon">&#xe608;</i>添加</span>
+						</div>
+						<div class="tasklist">
+							<div class="layui-form-item must task">
+								<label class="layui-form-label">农事任务1</label>
+								<div class="layui-input-block">
+									<input type="text" name="title" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label">农事任务2</label>
+								<div class="layui-input-block">
+									<input type="text" name="title" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label">农事任务3</label>
+								<div class="layui-input-block">
+									<input type="text" name="title" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label">农事任务4</label>
+								<div class="layui-input-block">
+									<input type="text" name="title" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label"></label>
+							<div class="layui-input-block">
+								<span class="addtask busbandrybtn layui-btn"><i class="layui-icon">&#xe608;</i>添加更多记录</span>
+							</div>
+						</div>
+						<div class="layui-form-item must layui-form-text">
+							<label class="layui-form-label">产品特色</label>
+							<div class="layui-input-block">
+								<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn busbandrybtn layui-btn-normal my-btn-blue" lay-submit lay-filter="formDemo">确认</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn busbandrybtn layui-btn-normal my-btn-blue" onclick="javascript:history.back(-1)">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script src="../../js/qrcode.min.js"></script>
+<script src="../../layui/lay/modules/layer.js"></script>
+<script>
+	$(function() {
+		var max = 10;
+		var now = 4;
+		$('.addtask').click(function() {
+			if(now >= max) {
+				layer.open({
+					title: '温馨提示',
+					content: '农事活动已经达到最大限制'
+				});
+				return
+			}
+			now++
+			var html = `<div class="layui-form-item must task">
+						<label class="layui-form-label">农事任务` + now + `</label>
+						<div class="layui-input-block">
+							<input type="text" name="title" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等" autocomplete="off" class="layui-input">
+							<i style="font-size: 18px;position: absolute;top: 9px; right: 6px;cursor: pointer;" class="layui-icon layui-icon-close"></i>
+						</div>
+					</div>`
+			$('.tasklist').append(html)
+		})
+		$('.tasklist').on('click', '.layui-icon-close', function() {
+			now--
+			$(this).parent().parent().remove()
+		})
+		layui.use('form', function(){
+			var form = layui.form;
+			//监听提交
+			form.on('submit(formDemo)', function(formdata){
+                $.ajax({
+                    type : 'post',
+                    url : '/productBatchess',
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(formdata),
+                    success : function(data) {
+                        layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                            location.href = "userList.html";
+                        });
+                    }
+                });
+			  setTimeout(function(){
+			  	location.href = 'producterlist.html'
+			  },1000)
+			  return false;
+			});
+		})
+	})
+</script>

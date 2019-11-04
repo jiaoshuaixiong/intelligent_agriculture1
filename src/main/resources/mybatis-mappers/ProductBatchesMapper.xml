@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwulian.dao.ProductBatchesDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.product_name != null and params.product_name != ''">
+				and product_name = #{params.productName} 
+			</if>
+			<if test="params.isactive != null and params.isactive != ''">
+				and isactive = #{params.isactive} 
+			</if>
+			<if test="params.product_batch != null and params.product_batch != ''">
+				and product_batch = #{params.productBatch} 
+			</if>
+			<if test="params.area != null and params.area != ''">
+				and area = #{params.area} 
+			</if>
+			<if test="params.recoverydate != null and params.recoverydate != ''">
+				and recoverydate = #{params.recoverydate} 
+			</if>
+			<if test="params.img != null and params.img != ''">
+				and img = #{params.img} 
+			</if>
+			<if test="params.feature != null and params.feature != ''">
+				and feature = #{params.feature} 
+			</if>
+			<if test="params.sys_user_id != null and params.sys_user_id != ''">
+				and sys_user_id = #{params.sysUserId} 
+			</if>
+			<if test="params.farm_id != null and params.farm_id != ''">
+				and farm_id = #{params.framId}
+			</if>
+		
+		</where>
+	</sql>
+
+	<update id="update">
+		update product_batches t
+		<set>
+			<if test="productName != null">
+				product_name = #{productName}, 
+			</if>
+			<if test="isactive != null">
+				isactive = #{isactive}, 
+			</if>
+			<if test="productBatch != null">
+				product_batch = #{productBatch}, 
+			</if>
+			<if test="area != null">
+				area = #{area}, 
+			</if>
+			<if test="recoverydate != null">
+				recoverydate = #{recoverydate}, 
+			</if>
+			<if test="img != null and img != 'null' ">
+				img = #{img}, 
+			</if>
+			<if test="feature != null">
+				feature = #{feature}, 
+			</if>
+			<if test="sysUserId != null">
+				sys_user_id = #{sysUserId}, 
+			</if>
+			<if test="framId != null">
+				farm_id = #{framId},
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

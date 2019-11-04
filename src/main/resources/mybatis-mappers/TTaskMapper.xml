@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwulian.dao.TTaskDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.product_batches_id != null and params.product_batches_id != ''">
+				and product_batches_id = #{params.productBatchesId} 
+			</if>
+			<if test="params.content != null and params.content != ''">
+				and content = #{params.content} 
+			</if>
+			<if test="params.state != null and params.state != ''">
+				and state = #{params.state} 
+			</if>
+			<if test="params.img1 != null and params.img1 != ''">
+				and img1 = #{params.img1} 
+			</if>
+			<if test="params.img2 != null and params.img2 != ''">
+				and img2 = #{params.img2} 
+			</if>
+			<if test="params.img3 != null and params.img3 != ''">
+				and img3 = #{params.img3} 
+			</if>
+			<if test="params.img4 != null and params.img4 != ''">
+				and img4 = #{params.img4} 
+			</if>
+			<if test="params.producter_id != null and params.producter_id != ''">
+				and producter_id = #{params.producterId} 
+			</if>
+			<if test="params.sys_user_id != null and params.sys_user_id != ''">
+				and sys_user_id = #{params.sysUserId} 
+			</if>
+		
+		</where>
+	</sql>
+
+
+	<update id="update">
+		update t_task t
+		<set>
+			<if test="productBatchesId != null">
+				product_batches_id = #{productBatchesId}, 
+			</if>
+			<if test="content != null">
+				content = #{content}, 
+			</if>
+			<if test="state != null">
+				state = #{state}, 
+			</if>
+			<if test="img1 != null">
+				img1 = #{img1}, 
+			</if>
+			<if test="img2 != null">
+				img2 = #{img2}, 
+			</if>
+			<if test="img3 != null">
+				img3 = #{img3}, 
+			</if>
+			<if test="img4 != null">
+				img4 = #{img4}, 
+			</if>
+			<if test="area != null">
+				area = #{area},
+			</if>
+			<if test="producterId != null">
+				producter_id = #{producterId}, 
+			</if>
+			<if test="sysUserId != null">
+				sys_user_id = #{sysUserId}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

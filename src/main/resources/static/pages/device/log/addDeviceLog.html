@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" media="screen" href="../../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>所属人ID</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入所属人ID' type='text' name='userId' id='userId' data-bv-notempty='true' data-bv-notempty-message='userId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备ID</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备ID' type='text' name='deviceId' id='deviceId' data-bv-notempty='true' data-bv-notempty-message='deviceId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>所属农场</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入所属农场' type='text' name='farmId' id='farmId' data-bv-notempty='true' data-bv-notempty-message='farmId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备名称</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备名称' type='text' name='deviceName' id='deviceName' data-bv-notempty='true' data-bv-notempty-message='deviceName 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>日志级别</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入日志级别' type='text' name='level' id='level' data-bv-notempty='true' data-bv-notempty-message='level 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>日志内容</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入日志内容' type='text' name='content' id='content' data-bv-notempty='true' data-bv-notempty-message='content 不能为空'>
+				</div>
+			</div>
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="location.href='deviceLogList.html'">返回</button>
+						<button class="btn btn-primary" type="submit" onclick="add()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../../js/jq.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate'], function(){
+		    var layer = layui.layer;
+		});
+		
+		function add() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+			   return;
+		    }
+		    
+		    var formdata = $("#form").serializeObject();
+
+			$.ajax({
+				type : 'post',
+				url : '/deviceLogs',
+				contentType: "application/json; charset=utf-8",  
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                        location.href = "deviceLogList.html";
+                    });
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>

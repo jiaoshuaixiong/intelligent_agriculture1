@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+	    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" />
+	    <link rel="stylesheet" href="../../css/global.css">
+	    <link rel="stylesheet" href="../../css/mytable.css">
+	    <link rel="stylesheet" href="" id='bugcss'>
+		<script type="text/javascript">
+			document.querySelector('#bugcss').href = '../../layuiadmin/style/bug.css?v=1.0&code=' + new Date();
+		</script>
+	</head>
+	<body>
+		<div class="warp">
+			<div class="layui-container form-main">
+				<div class="layui-row main-title">
+					添加产品批次
+				</div>
+				<div class="layui-row main-form">
+					<form class="layui-form" method="post" id="form" onsubmit="return false" action="" enctype="multipart/form-data">
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">作物名称</label>
+							<div class="layui-input-block">
+								<input type="text" name="productName" id="productName" required lay-verify="required" placeholder="请输入作物名称" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">产品批次</label>
+							<div class="layui-input-block">
+								<input type="text" name="productBatch" id="productBatch" required lay-verify="required" placeholder="请输入产品批次" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">种植面积</label>
+							<div class="layui-input-block">
+								<input type="number" name="area" id="area" required lay-verify="required" placeholder="请输入种植面积(单位/亩)" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">预计采收时间</label>
+							<div class="layui-input-block">
+								<input type="text" name="recoverydate" placeholder="yyyy-MM-dd" id="recoverydate" id="recoverydate"  required lay-verify="required" placeholder="请输入采集时间" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+					<!--	<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">产品图片</label>
+							<div class="layui-input-block">
+								<input id="structurePicture" type="file" name="img" style="width: 70%;" required lay-verify="required" placeholder="请上传图片文件" autocomplete="off" class="layui-input">
+							</div>
+						</div>-->
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">产品图片</label>
+							<div class="layui-input-block">
+								<div class="file-box">
+                                </div>
+							</div>
+							<input class="hidden abs-input" type="file" value="" name="" id = "input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" onchange="imgPreview(this,0)" >
+							<span class="layui-btn abs-addproto"><i class="layui-icon">&#xe608;</i>添加</span>
+							<!--<span class="layui-btn abs-addproto"><i class="layui-icon">&#xe608;</i>添加</span>-->
+						</div>
+						<div class="tasklist">
+							<div class="layui-form-item must task">
+								<label class="layui-form-label layui-hide-xs">农事任务1</label>
+								<div class="layui-input-block">
+									<input type="text" name="task1" id="task1" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等,当前第1条记录" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label layui-hide-xs">农事任务2</label>
+								<div class="layui-input-block">
+									<input type="text" name="task2" id="task2"  required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等,当前第2条记录" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label layui-hide-xs">农事任务3</label>
+								<div class="layui-input-block">
+									<input type="text" name="task3" id="task3"  required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等,当前第3条记录" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-form-item must task">
+								<label class="layui-form-label layui-hide-xs">农事任务4</label>
+								<div class="layui-input-block">
+									<input type="text" name="task4" id="task4"  required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等,当前第4条记录" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label layui-hide-xs"></label>
+							<div class="layui-input-block">
+								<span class="addtask layui-btn my-min-width"><i class="layui-icon">&#xe608;</i>添加更多记录</span>
+							</div>
+						</div>
+						<div class="layui-form-item must layui-form-text">
+							<label class="layui-form-label layui-hide-xs">产品特色</label>
+							<div class="layui-input-block">
+								<textarea name="feature" id="feature"  placeholder="请输入产品特色内容" class="layui-textarea"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" id="save" lay-submit lay-filter="formDemo">确认</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" onclick="javascript:history.back(-1)">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/layer.js"></script>
+<script type="text/javascript" src="../../js/mytable.js"></script>
+<script>
+	$(function() {
+		var max = 10;
+		var now = 4;
+		$('.addtask').click(function() {
+			if(now >= max) {
+				layer.open({
+					title: '温馨提示',
+					content: '农事活动已经达到最大限制'
+				});
+				return
+			}
+			now++
+			var html = `<div class="layui-form-item must task">
+							<label class="layui-form-label layui-hide-xs">农事任务`+now+`</label>
+							<div class="layui-input-block">
+								<input type="text" name="task`+now+`" id="task`+now+`" required lay-verify="required" placeholder="请按顺序输入该作物农事活动流程、如播种、移栽等，当前第`+now+`条记录" autocomplete="off" class="layui-input">
+								<i class="layui-icon layui-icon-close abs-close"></i>
+							</div>
+						</div>`
+			$('.tasklist').append(html)
+		})
+		$('.tasklist').on('click', '.layui-icon-close', function() {
+			now--
+			$(this).parent().parent().remove()
+		})
+
+        $('#save').click(function(){
+            var fd = new FormData();
+            fd.append("productName",$("#productName").val());
+            fd.append("productBatch",$("#productBatch").val());
+            fd.append("area",$("#area").val());
+            fd.append("recoverydate",$("#recoverydate").val());
+            fd.append("feature",$("#feature").val());
+            fd.append("img",$("#input_file")[0].files[0]);
+            for (var i = 1;i<=now;i++){
+                var task = "task"+i;
+                fd.append(task,$("#" +task).val());
+            }
+            $.ajax({
+                type : 'post',
+                url : '/productBatchess',
+                contentType:false,
+                processData: false,
+                data : fd,
+                success : function(data) {
+                    layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                        location.href = "husbandry_list.html";
+                    });
+                }
+            });
+        });
+	})
+</script>
+<script type="text/javascript">
+    $(function(){
+$('.abs-addproto').click(function(){
+$('.abs-input').click()
+})
+$('.file-box').on('dblclick','.myappendimg',function(){
+console.log(123)
+$(this).remove()
+})
+})
+function imgPreview(fileDom,i) {
+console.log(2)
+//判断是否支持FileReader
+if(window.FileReader) {
+var reader = new FileReader();
+} else {
+alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+}
+//获取文件
+var file = fileDom.files[0];
+var imageType = /^image\//;
+//是否是图片
+if(!imageType.test(file.type)) {
+alert("请选择图片！");
+return;
+}
+//读取完成
+reader.onload = function(e) {
+//图片路径设置为读取的图片
+// img.src = e.target.result;
+console.log(e.target.result)
+var img ='<img class="myappendimg" src="'+e.target.result+'" />' ;
+$('.file-box').append(img)
+//          console.log(document.getElementsByClassName('file-box'));
+//          document.getElementsByClassName('file-box')[i].style.background = "url("+e.target.result+")no-repeat";//回显图片
+//          document.getElementsByClassName('file-box')[i].style.backgroundSize = '200px 160px';
+//          console.log('reader',reader)
+};
+reader.readAsDataURL(file);
+}
+</script>
+<script type="text/javascript">
+    $(function(){
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#recoverydate', //指定元素
+                format: 'yyyy-MM-dd'
+            });
+        });
+    })
+</script>

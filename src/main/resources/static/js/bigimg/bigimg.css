@@ -1,0 +1,19 @@
+#imgModule{display:none;}
+#imgDefault{cursor:pointer;}
+/*.imgItem{width:100px;height:80px;}*/
+.mask{background:#000;opacity:.8;filter:alpha(opacity=80);position:absolute;left:0;top:0;width:100%;height:100%;}
+.lightBoxContent{width:800px;height:530px;position:absolute;left:50%;top:50%;background:#fff;margin:-265px 0 0 -400px;}
+#imgLoader{width:32px;height:32px;position:absolute;left:50%;top:50%;margin:-16px 0 0 -16px;display:none;}
+#imgLight{width:800px;height:530px;-webkit-animation:change 1s;animation:change 1s;}
+#imgModule .btn{width:40px;height:50px;position:absolute;top:50%;margin-top:-25px;cursor:pointer;}
+.lightBoxSprite{background-image:url(./imgIcons.png);background-repeat:no-repeat;}
+#lightBoxPrev{left:10px;background-position:2px center;}
+#lightBoxNext{right:10px;background-position:-42px center;}
+.closeBtn{width:35px;height:35px;background-position:-100px center;position:absolute;top:15px;right:15px;cursor:pointer;}
+.lightBoxPagination{position:absolute;left:0;bottom:50px;width:100%;text-align:center;}
+.lightBoxPagination span{display:inline-block;width:10px;height:10px;border:1px solid #fff;-webkit-border-radius:50%;border-radius:50%;margin-right:8px;}
+.lightBoxPagination span.current{background:#fff;}
+@keyframes change{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}

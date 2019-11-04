@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>机智物联</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/mobile_globa.css">
+    <link rel="stylesheet" type="text/css" href="./css/mobile_producter.css" />
+    <link rel="stylesheet" type="text/css" href="./js/swiper/css/swiper.min.css" />
+    <script src="./js/rem.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./videojs/ezuikit.js"></script>
+</head>
+
+<body>
+    <div class="warp">
+        <div class="wl-banner">
+            <div class="swiper-container">
+                <div class="swiper-wrapper" id="banner"></div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="wl-info">
+            <div class="wl-title">湖南嘉穗农业</div>
+            <p class="details">嘉穗农业位于湖南衡阳县，是一个集水稻种植、生产、加工为一体的现代农业基地，主要产品包括有机大米...</p>
+            <div class="buy">订购产品</div>
+            <ul class="list" id="infolist"></ul>
+        </div>
+        <div class="wl-video">
+            <div class="wl-title">实时视频</div>
+            <!-- class="swiper-container">
+					<div class="swiper-wrapper" id="realtime_video"></div>
+					<div class="swiper-pagination"></div>
+				</div> -->
+            <div class="showvideo">
+                <!-- <video id="player2" width=100% poster="" controls playsInline webkit-playsinline autoplay>
+                    <source src="http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8" audioplayer playsinline webkit-playsinline="true" x5-video-player-type="h5" type="application/x-mpegURL" />
+                </video> -->
+            </div>
+            <p class="explain">欢迎观看基地的实时视频，作物生长触手可及！</p>
+        </div>
+        <div class="wl-environmental">
+            <div class="wl-title">环境监测
+                <div class="abs-time">数据更新时间：2019-04-21 16:33</div>
+            </div>
+            <div class="environmental-box">
+                <div class="environmental-level">
+                    <div class="title">作物生长环境评分</div>
+                    <div class="level">优良</div>
+                </div>
+                <ul class="environmental-parameter" id="environmentallist"></ul>
+            </div>
+        </div>
+        <div class="wl-record">
+            <div class="wl-title">农事记录</div>
+            <div class="recodebox"></div>
+        </div>
+        <div class="wl-qualifications">
+            <div class="wl-title">企业资质</div>
+            <ul class="qualificationslist">
+                <li><img src="./img/producter/qualifications/qualifications01.png" alt="" /></li>
+                <li><img src="./img/producter/qualifications/qualifications01.png" alt="" /></li>
+            </ul>
+        </div>
+        <div class="wl-footer">
+            <p>技术服务：<span>湖南机智物联科技有限公司</span></p>
+            <p>技术服务热线：0731-89912911</p>
+        </div>
+    </div>
+    <div class="model"></div>
+</body>
+<script src="./js/jquery-2.1.1.min.js"></script>
+<script src="./js/template.js"></script>
+<script src="./js/swiper/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script id="banner_tmp" type="template/text">
+    {{if productBatches}}
+    <div class="swiper-slide"><img src="{{#productBatches.img}}" alt=""></div>
+    {{/if}}
+</script>
+<script id="infolist_tmp" type="template/text">
+    {{if productBatches}}
+    <li>
+        <span class="li1">作物名称</span>
+        <span class="li2">{{productBatches.productName}}</span>
+    </li>
+    <li>
+        <span class="li1">产品批次</span>
+        <span class="li2">{{productBatches.productBatch}}</span>
+    </li>
+    <li>
+        <span class="li1">种植面积</span>
+        <span class="li2">{{productBatches.area}}</span>
+    </li>
+    <li>
+        <span class="li1">采收时间</span>
+        <span class="li2">{{productBatches.recoverydate}}</span>
+    </li>
+    <li>
+        <span class="li1">作物产地</span>
+        <span class="li2">{{farm.city}}</span>
+    </li>
+    <li>
+        <span class="li1">产品特色</span>
+        <span class="li2">{{productBatches.feature}}</span>
+    </li>
+    {{/if}}
+</script>
+<script id="video_tmp" type="template/text">
+    <video id="player2" width=100% poster="" controls playsInline webkit-playsinline autoplay>
+		<source src="{{url}}" audioplayer playsinline webkit-playsinline="true" x5-video-player-type="h5" type="application/x-mpegURL" />
+	</video>
+</script>
+<script id="environmentallist_tmp" type="template/text">
+    {{each deviceGathers}}
+    <li>
+        <p class="data">{{$value.basicData}}</p>
+        <p class="title">{{$value.deviceName}}</p>
+    </li>
+    {{/each}}
+</script>
+<script id="info_tmp" type="template/text">
+    <div class="wl-title">{{farm.name}}</div>
+    <p class="details">{{farm.remark}}</p>
+    <div class="buy">订购产品</div>
+    <ul class="list" id="infolist">
+        {{if productBatches}}
+        <li>
+            <span class="li1">作物名称</span>
+            <span class="li2">{{productBatches.productName}}</span>
+        </li>
+        <li>
+            <span class="li1">产品批次</span>
+            <span class="li2">{{productBatches.productBatch}}</span>
+        </li>
+        <li>
+            <span class="li1">种植面积</span>
+            <span class="li2">{{productBatches.area}}</span>
+        </li>
+        <li>
+            <span class="li1">采收时间</span>
+            <span class="li2">{{productBatches.recoverydate}}</span>
+        </li>
+        <li>
+            <span class="li1">作物产地</span>
+            <span class="li2">{{farm.city}}</span>
+        </li>
+        <li>
+            <span class="li1">产品特色</span>
+            <span class="li2">{{productBatches.feature}}</span>
+        </li>
+        {{/if}}
+    </ul>
+</script>
+<script id="recordlist_tmp" type="template/text">
+    <ul class="recordtable">
+        {{each opacitylist}}
+        <li style="opacity: {{$value}};"></li>
+        {{/each}}
+    </ul>
+    <ul class="recordlist">
+        {{each mydata.producterIdList as value index}} {{if index%2==1}}
+        <li class="right">
+            {{else}}
+            <li class="left">
+                {{/if}}
+                <div href="#" class="stepbox">
+                    <div class="step-process">{{value.content}}</div>
+                    <div class="step-info">
+                        <div class="step-time">{{value.createTime}}</div>
+                        <div class="step-name">{{value.userName}}</div>
+                    </div>
+                    <ul class="step-photo clearfix">
+                        <li class="open" data-img="{{value.img1}}" style="background: url({{value.img1}}) center center no-repeat;background-size: cover;"></li>
+                        <li class="open" data-img="{{value.img2}}" style="background: url({{value.img2}}) center center no-repeat;background-size: cover;"></li>
+                        <li class="open" data-img="{{value.img3}}" style="background: url({{value.img3}}) center center no-repeat;background-size: cover;"></li>
+                    </ul>
+                    <div class="step-explain">
+                        {{value.descContent}}
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+    </ul>
+</script>
+<script id="qualificationslist_tmp" type="template/text">
+    {{each myqualifications}}
+    <li>
+        <img src="{{$value}}" alt="" />
+    </li>
+    {{/each}}
+</script>
+<script>
+    let mydata = '';
+    $(document).ready(function() {
+        init();
+        clickopen()
+    })
+
+
+    // 	<div ng-show="vedio.farmId==35 && vedio.userId==7 && vedio.id==2 ">
+    //    <video type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player1" poster="" controls playsInline webkit-playsinline  autoplay>
+    //    <source  src="http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8"  type="application/x-mpegURL"/>
+    //    <source src="https://open.ys7.com/view/h5/a523364e367a4ba4856d23bb5edc1b44" />>
+    // </video>
+    // </div>
+    //   <div ng-show="vedio.farmId==39 && vedio.userId==4 && vedio.id==6">
+    //      <video  type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player2" poster="" controls playsInline webkit-playsinline autoplay >
+    //          <source  src="http://hls01open.ys7.com/openlive/26d514ed086744f681cbd2487cc219ef.hd.m3u8" type="application/x-mpegURL"/>
+    //      </video>
+    //   </div>
+    //   <div ng-show="vedio.id==1">
+    //      <video src="http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8" type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player3" poster="" controls playsInline webkit-playsinline  >
+    //      </video>
+    //   </div>
+    //                        <div ng-show="vedio.farmId==43 && vedio.userId==8 && vedio.id==7">
+    //                            <video  type="application/x-mpegURL" width="100%" style="max-height: 300px;" id="player4" poster="" controls playsInline webkit-playsinline autoplay >
+    //                                <source  src="http://hls01open.ys7.com/openlive/a709e0e46bf94762a902d9278410e23e.hd.m3u8" type="application/x-mpegURL"/>
+    //                            </video>
+    //                        </div>
+
+    function initvideo(fid = 35) {
+        console.log(fid)
+        let v = '';
+        if (fid == 35) {
+            v = 'http://hls.open.ys7.com/openlive/a523364e367a4ba4856d23bb5edc1b44.hd.m3u8'
+        } else if (fid = 39) {
+            v = 'http://hls01open.ys7.com/openlive/26d514ed086744f681cbd2487cc219ef.hd.m3u8'
+        } else if (fid = 43) {
+            v = 'http://hls01open.ys7.com/openlive/a709e0e46bf94762a902d9278410e23e.hd.m3u8'
+        }
+        let h = template('video_tmp', {
+                url: v
+            })
+            // console.log(h)
+        $('.showvideo').html(h);
+        // setTimeout(function() {
+
+        // }, 0)
+        new EZUIPlayer('player2');
+
+    }
+
+    function clickopen() {
+        $('.recodebox').on('click', '.open', function() {
+            let img = $(this).data('img');
+            console.log(img)
+            $('.model').show().css({
+                "background": "url(" + img + ") center center no-repeat",
+                "backgroundSize": "cover"
+            })
+        })
+        $('.model').click(function() {
+            $(this).hide()
+        })
+    }
+
+    function init() {
+        let search = window.location.search;
+        let str = search;
+        str = str.substring(1, str.length);
+        console.log(str)
+        let arr = str.split("&");
+        let obj = new Object();
+        for (let i = 0; i < arr.length; i++) {
+            let tmp_arr = arr[i].split("=");
+            obj[decodeURIComponent(tmp_arr[0])] = decodeURIComponent(tmp_arr[1]);
+        }
+        let id = obj['id'];
+        let farmid = obj['farmid'];
+        // console.log(111)
+
+        $.ajax({
+            // headers:{
+            //        'Content-Type': "application/json; charset=utf-8"
+            //    },
+            url: 'http://x.topwulian.com/tTasks/mobile',
+            //				url:'http://192.168.43.108:9001/tTasks/mobile',
+            type: 'post',
+            data: {
+                id,
+                farmid
+            },
+            success(res) {
+                console.log(res)
+                mydata = res.data
+            },
+            complete() {
+                getbanner()
+                getinfo()
+                    // getvideo()
+                getenvironmental()
+                getrecord()
+                getqualifications()
+                initvideo(farmid)
+            }
+        })
+    }
+
+    function getbanner() {
+        var html = template('banner_tmp', mydata)
+        $('#banner').html(html)
+        initbanner()
+    }
+
+    function getinfo() {
+        var html = template('info_tmp', mydata)
+        $('.wl-info').html(html)
+    }
+
+    // function getvideo() {
+    //     var html = template('video_tmp', {})
+    //     $('#realtime_video').html(html)
+    //     initbanner()
+    // }
+
+    function getenvironmental() {
+        var html = template('environmentallist_tmp', mydata)
+        $('#environmentallist').html(html)
+    }
+
+    function getrecord() {
+        setTimeout(function() {
+            var list = mydata;
+            var arr = [];
+            var newarr = [];
+            total = arr.length = list.producterIdList.length;
+            arr = arr.fill(0)
+            newarr = arr.map(function(v, i) {
+                return (i + 1) / 8
+            })
+            var obj = {
+                "opacitylist": newarr.reverse(),
+                mydata: mydata
+            }
+            console.log(obj)
+            var html = template('recordlist_tmp', obj)
+            $('.recodebox').html(html)
+            setTimeout(function() {
+                $('.recodebox .recordlist>li').each(function(i, v) {
+                    $(v).css('top', i * (2 + 0.1) + 'rem')
+                })
+            }, 100)
+        }, 100)
+    }
+
+    function getqualifications() {
+        $.ajax({
+            url: './myjson/myproducter.json',
+            success: function(res) {
+                var html = template('qualificationslist_tmp', res.myjson)
+                    //					$('.qualificationslist').html(html)
+            }
+        })
+    }
+
+    function initbanner() {
+        var mySwiper = new Swiper('.swiper-container', {
+            autoplay: true, //可选选项，自动滑动
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                stopOnLastSlide: false,
+                disableOnInteraction: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+    }
+</script>
+<script>
+    // var player2 = new EZUIPlayer('player2');
+</script>
+
+</html>

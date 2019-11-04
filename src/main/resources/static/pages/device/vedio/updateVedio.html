@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" media="screen" href="../../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<input type="hidden" id="id" name="id">
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>摄像头名称</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入摄像头名称' type='text' name='name' id='name' data-bv-notempty='true' data-bv-notempty-message='name 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>摄像头品牌</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入摄像头品牌' type='text' name='brand' id='brand' data-bv-notempty='true' data-bv-notempty-message='brand 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>播放秘钥</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入播放秘钥' type='text' name='accessToken' id='accessToken' data-bv-notempty='true' data-bv-notempty-message='accessToken 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备号</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备号' type='text' name='deviceSerial' id='deviceSerial' data-bv-notempty='true' data-bv-notempty-message='deviceSerial 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>视频播放通道</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入视频播放通道' type='text' name='channelNo' id='channelNo' data-bv-notempty='true' data-bv-notempty-message='channelNo 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>所属人</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入所属人' type='text' name='userId' id='userId' data-bv-notempty='true' data-bv-notempty-message='userId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>归属农场</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入归属农场' type='text' name='farmId' id='farmId' data-bv-notempty='true' data-bv-notempty-message='farmId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>状态0：在线 1：离线</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入状态' type='text' name='state' id='state' data-bv-notempty='true' data-bv-notempty-message='state 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>摄像头位置</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入摄像头位置' type='text' name='location' id='location' data-bv-notempty='true' data-bv-notempty-message='location 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>播放地址</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入播放地址' type='text' name='url' id='url' data-bv-notempty='true' data-bv-notempty-message='url 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>生成秘钥key</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入生成秘钥key' type='text' name='appKey' id='appKey' data-bv-notempty='true' data-bv-notempty-message='appKey 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>生成秘钥secret</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入生成秘钥secret' type='text' name='appSecret' id='appSecret' data-bv-notempty='true' data-bv-notempty-message='appSecret 不能为空'>
+				</div>
+			</div>
+
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="window.history.go(-1)">返回</button>
+						<button class="btn btn-primary" type="submit" onclick="update()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../../js/jq.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate'], function(){
+		    var layer = layui.layer;
+		});
+		
+		initData();
+		
+		function initData(){
+			var id = getUrlParam("id");
+			if(id != ""){
+				$.ajax({
+					type : 'get',
+					url : '/vedios/'+id,
+					async : false,
+					success : function(data) {
+						$('#id').val(data.id);
+						$('#name').val(data.name);
+						$('#brand').val(data.brand);
+						$('#accessToken').val(data.accessToken);
+						$('#deviceSerial').val(data.deviceSerial);
+						$('#channelNo').val(data.channelNo);
+						$('#userId').val(data.userId);
+						$('#farmId').val(data.farmId);
+						$('#state').val(data.state);
+						$('#createTime').val(data.createTime);
+						$('#updateTime').val(data.updateTime);
+						$('#location').val(data.location);
+						$('#url').val(data.url);
+						$('#appKey').val(data.appKey);
+						$('#appSecret').val(data.appSecret);
+
+					}
+				});
+			}
+		}
+
+		function update() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+			   return;
+		    }
+		    
+		    var formdata = $("#form").serializeObject();
+
+			$.ajax({
+				type : 'put',
+				url : '/vedios',
+				contentType: "application/json; charset=utf-8",  
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("修改成功", {shift: -1, time: 1000}, function(){
+                        location.href = "vedioList.html";
+                    });
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>

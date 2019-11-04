@@ -1,0 +1,25 @@
+.vedio-select{
+    padding: 6px 12px;
+    height: 31.333px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42;
+    width: auto!important;
+    /*height: auto!important;*/
+
+}
+.vedio-select option{
+    text-align: center;
+}
+.layui-btn+.layui-btn{
+    margin-left:0!important;
+}
+.vedio-button-select button,.vedio-button-select select{
+    float: left;
+    display: block;
+    margin: 5px;
+}
+
+

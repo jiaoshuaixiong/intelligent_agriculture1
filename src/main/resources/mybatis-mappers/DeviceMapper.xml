@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwulian.dao.DeviceDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.sn != null and params.sn != ''">
+				and sn = #{params.sn} 
+			</if>
+			<if test="params.name != null and params.name != ''">
+				and name = #{params.name} 
+			</if>
+			<if test="params.typeId != null and params.typeId != ''">
+				and typeId = #{params.typeId} 
+			</if>
+			<if test="params.location != null and params.location != ''">
+				and location = #{params.location} 
+			</if>
+			<if test="params.image != null and params.image != ''">
+				and image = #{params.image} 
+			</if>
+			<if test="params.installTime != null and params.installTime != ''">
+				and installTime = #{params.installTime} 
+			</if>
+			<if test="params.state != null and params.state != ''">
+				and state = #{params.state} 
+			</if>
+			<if test="params.standard != null and params.standard != ''">
+				and standard = #{params.standard} 
+			</if>
+			<if test="params.manufacturer != null and params.manufacturer != ''">
+				and manufacturer = #{params.manufacturer} 
+			</if>
+			<if test="params.userId != null and params.userId != ''">
+				and userId = #{params.userId} 
+			</if>
+			<if test="params.farmId != null and params.farmId != ''">
+				and farmId = #{params.farmId}
+			</if>
+			<if test="params.remark != null and params.remark != ''">
+				and remark = #{params.remark} 
+			</if>
+			<if test="params.softwareVersion != null and params.softwareVersion != ''">
+				and softwareVersion = #{params.softwareVersion} 
+			</if>
+			<if test="params.thresholdMin != null and params.thresholdMin != ''">
+				and thresholdMin = #{params.thresholdMin} 
+			</if>
+			<if test="params.thresholdMax != null and params.thresholdMax != ''">
+				and thresholdMax = #{params.thresholdMax} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from t_device t
+        <if test="params != null">
+            <include refid="where" />
+        </if>
+	</select>
+
+	<select id="list" resultType="Device">
+		select * from t_device t
+        <if test="params != null">
+            <include refid="where" />
+            <if test="params.orderBy != null and params.orderBy != ''">
+                ${params.orderBy}
+            </if>
+        </if>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+	</select>
+
+	<update id="update">
+		update t_device t
+		<set>
+			<if test="sn != null">
+				sn = #{sn}, 
+			</if>
+			<if test="name != null">
+				name = #{name}, 
+			</if>
+			<if test="typeId != null">
+				typeId = #{typeId}, 
+			</if>
+			<if test="location != null">
+				location = #{location}, 
+			</if>
+			<if test="image != null">
+				image = #{image}, 
+			</if>
+			<if test="installTime != null">
+				installTime = #{installTime}, 
+			</if>
+			<if test="state != null">
+				state = #{state}, 
+			</if>
+			<if test="standard != null">
+				standard = #{standard}, 
+			</if>
+			<if test="manufacturer != null">
+				manufacturer = #{manufacturer}, 
+			</if>
+			<if test="userId != null">
+				userId = #{userId}, 
+			</if>
+			<if test="farmId != null">
+                farmId = #{farmId},
+			</if>
+			<if test="remark != null">
+				remark = #{remark}, 
+			</if>
+			<if test="softwareVersion != null">
+				softwareVersion = #{softwareVersion}, 
+			</if>
+			<if test="thresholdMin != null">
+				thresholdMin = #{thresholdMin}, 
+			</if>
+			<if test="thresholdMax != null">
+				thresholdMax = #{thresholdMax}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

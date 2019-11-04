@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" media="screen" href="../../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>采集设备ID</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入采集设备ID' type='text' name='deviceId' id='deviceId' data-bv-notempty='true' data-bv-notempty-message='deviceId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备唯一序列号</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备唯一序列号' type='text' name='deviceSn' id='deviceSn' data-bv-notempty='true' data-bv-notempty-message='deviceSn 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>设备名称</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入设备名称' type='text' name='deviceName' id='deviceName' data-bv-notempty='true' data-bv-notempty-message='deviceName 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>传感器类型</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入传感器类型' type='text' name='deviceType' id='deviceType' data-bv-notempty='true' data-bv-notempty-message='deviceType 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>采集的数据</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入采集的数据' type='text' name='basicData' id='basicData' data-bv-notempty='true' data-bv-notempty-message='basicData 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>计量单位ID</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入计量单位ID' type='text' name='measurementUnitId' id='measurementUnitId' data-bv-notempty='true' data-bv-notempty-message='measurementUnitId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>计量单位</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入计量单位' type='text' name='measurementUnitName' id='measurementUnitName' data-bv-notempty='true' data-bv-notempty-message='measurementUnitName 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>单位类型</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入单位类型' type='text' name='measureUnitType' id='measureUnitType' data-bv-notempty='true' data-bv-notempty-message='measureUnitType 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>采集时间</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='请输入采集时间' type='text' name='gatherTime' id='gatherTime' data-bv-notempty='true' data-bv-notempty-message='gatherTime 不能为空'>
+				</div>
+			</div>
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="location.href='deviceGatherList.html'">返回</button>
+						<button class="btn btn-primary" type="submit" onclick="add()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../../js/jq.js"></script>
+	<script type="text/javascript" src="../../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../../js/common.js"></script>
+	<script type="text/javascript" src="../../../layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate'], function(){
+		    var layer = layui.layer;
+		});
+		
+		function add() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+			   return;
+		    }
+		    
+		    var formdata = $("#form").serializeObject();
+
+			$.ajax({
+				type : 'post',
+				url : '/deviceGathers',
+				contentType: "application/json; charset=utf-8",  
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                        location.href = "deviceGatherList.html";
+                    });
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>

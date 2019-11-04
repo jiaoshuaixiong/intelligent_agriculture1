@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topwulian.dao.SysYs7AccountDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.username != null and params.username != ''">
+				and username = #{params.username} 
+			</if>
+			<if test="params.password != null and params.password != ''">
+				and password = #{params.password} 
+			</if>
+			<if test="params.appKey != null and params.appKey != ''">
+				and appKey = #{params.appKey} 
+			</if>
+			<if test="params.appSecret != null and params.appSecret != ''">
+				and appSecret = #{params.appSecret} 
+			</if>
+			<if test="params.accessToken != null and params.accessToken != ''">
+				and accessToken = #{params.accessToken} 
+			</if>
+			<if test="params.appName != null and params.appName != ''">
+				and appName = #{params.appName} 
+			</if>
+			<if test="params.userId != null and params.userId != ''">
+				and userId = #{params.userId} 
+			</if>
+			<if test="params.remark != null and params.remark != ''">
+				and remark = #{params.remark} 
+			</if>
+			<if test="params.createTime != null and params.createTime != ''">
+				and createTime = #{params.createTime} 
+			</if>
+			<if test="params.updateTime != null and params.updateTime != ''">
+				and updateTime = #{params.updateTime} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from sys_ys7_account t
+		<include refid="where" />
+	</select>
+
+	<select id="list" resultType="SysYs7Account">
+		select * from sys_ys7_account t
+        <if test="params != null">
+            <include refid="where" />
+            ${params.orderBy}
+        </if>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+	</select>
+
+	<update id="update">
+		update sys_ys7_account t
+		<set>
+			<if test="username != null">
+				username = #{username}, 
+			</if>
+			<if test="password != null">
+				password = #{password}, 
+			</if>
+			<if test="appKey != null">
+				appKey = #{appKey}, 
+			</if>
+			<if test="appSecret != null">
+				appSecret = #{appSecret}, 
+			</if>
+			<if test="accessToken != null">
+				accessToken = #{accessToken}, 
+			</if>
+			<if test="appName != null">
+				appName = #{appName}, 
+			</if>
+			<if test="userId != null">
+				userId = #{userId}, 
+			</if>
+			<if test="remark != null">
+				remark = #{remark}, 
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime}, 
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css" />
+	    <link rel="stylesheet" href="../../layui/css/modules/layer/default/layer.css" />
+	    <link rel="stylesheet" href="../../css/global.css">
+	    <link rel="stylesheet" href="../../css/mytable.css">
+	    <link rel="stylesheet" href="" id='bugcss'>
+		<script type="text/javascript">
+			document.querySelector('#bugcss').href = '../../layuiadmin/style/bug.css?v=1.0&code=' + new Date();
+		</script>
+	</head>
+	<body>
+		<div class="warp">
+			<div class="layui-container form-main">
+				<div class="layui-row main-title">
+					添加生产人员
+				</div>
+				<div class="layui-row main-form">
+					<form class="layui-form" lay-filter="test1" id="form">
+						<div class="layui-form-item must">
+						    <label class="layui-form-label layui-hide-xs">姓名</label>
+						    <div class="layui-input-block">
+						     	<input type="text" name="username" required  lay-verify="required" placeholder="请输入生产人员姓名" autocomplete="off" class="layui-input">
+						    </div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">用户类别</label>
+							<div class="layui-input-block">
+								<select id="typeName" name="producerTypeId" lay-verify="required">
+									<option value="">请选择生产人员类别</option>
+									<option value="0">种植工人</option>
+									<option value="1">施肥工人</option>
+									<option value="2">浇水工人</option>
+									<option value="3">检查工人</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">微信账号</label>
+							<div class="layui-input-block">
+								<input type="text" name="wechat" required lay-verify="required" placeholder="请输入微信账号" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+                        <div class="layui-form-item must">
+                            <label class="layui-form-label layui-hide-xs">手机号</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="phone" required lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+						<div class="layui-form-item must">
+							<label class="layui-form-label layui-hide-xs">用户密码</label>
+							<div class="layui-input-block">
+								<input type="password" name="password" required lay-verify="required" placeholder="请输入用户密码" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<!--<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label layui-hide-xs">用户备注</label>
+							<div class="layui-input-block">
+								<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+							</div>
+						</div>-->
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" lay-submit lay-filter="formDemo">确认</button>
+							</div>
+						</div>
+					</form>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn my-btn-blue my-min-width" onclick="javascript:history.back(-1)" >返回</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../layui/lay/modules/layer.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script type="text/javascript">
+	$(function() {
+        layui.use(['layer','form'], function(){
+            var layer = layui.layer;
+            var form = layui.form;
+            $.ajax({
+                type : 'get',
+                url : '/tProducterTypes',
+                contentType: "application/json; charset=utf-8",
+                data : {},
+                success : function(data) {
+                    $('#typeName').html('');
+                    var htmlStr = "<option value=\"\">请选择生产人员类别</option>";
+                    for (var i = 0;i<data.data.length;i++) {
+                        htmlStr +="<option value='"+data.data[i].id+"'>"+data.data[i].typeName+"</option>";
+                    }
+                    $('#typeName').html(htmlStr);
+                    form.render('select','test1');
+                }
+            });
+
+            form.on('submit(formDemo)', function(data){
+                var formdata = $("#form").serializeObject();
+                $.ajax({
+                    type : 'post',
+                    url : '/tProducters',
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(formdata),
+                    success : function(data) {
+                        layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                            location.href = "producter_list.html";
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+	})
+</script>
